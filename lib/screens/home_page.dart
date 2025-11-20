@@ -16,9 +16,9 @@ class _HomePageState extends State<HomePage> {
   int _selectedBottomNavIndex = 0;
 
   final List<String> carouselImages = [
-    'images/promo_1.png',
-    'images/promo_2.png',
-    'images/promo_3.png',
+    'assets/images/promo_1.png',
+    'assets/images/promo_2.png',
+    'assets/images/promo_3.png',
   ];
 
   final List<Map<String, dynamic>> menuItems = [

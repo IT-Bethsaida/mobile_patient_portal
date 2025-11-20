@@ -17,7 +17,7 @@ class HospitalInformationPage extends StatelessWidget {
         'name': 'Bethsaida Hospital Gading Serpong',
         'description':
             'Adalah salah satu unit bisnis dari Paramount Enterprise International dan merupakan Hospital Umum pertama di wilayah Gading Serpong yang diresmikan pada tanggal 12 Desember 2012. Bethsaida Hospital didirikan untuk memenuhi kebutuhan layanan kesehatan bagi masyarakat di seluruh Indonesia, khususnya wilayah provinsi Banten, Jakarta Barat dan Jakarta Selatan yang berbatasan dengan wilayah Tangerang dan sekitarnya. Bethsaida Hospital juga berupaya agar pengobatan pasien dapat dilayani dengan tuntas (One Stop Services).',
-        'image': 'images/bethsaida_hospital_gading_serpong.jpg',
+        'image': 'assets/images/bethsaida_hospital_gading_serpong.jpg',
         'phone': '021-29309999',
         'address':
             'Jalan Boulevard Raya Gading Serpong Kav. 29 Gading Serpong, Curug Sangereng, Kelapa Dua, Tangerang Regency, Banten 15810',
@@ -26,7 +26,7 @@ class HospitalInformationPage extends StatelessWidget {
         'name': 'Bethsaida Hospital Serang',
         'description':
             'ethsaida Hospital serang adalah salah satu unit bisnis dari PT Paramount Enterprise International yang telah diresmikan pada tanggal 8 Agustus 2024. Bethsaida Hospital didirikan untuk memenuhi kebutuhan layanan kesehatan bagi masyarakat di wilayah Serang, Cilegon dan sekitarnya. Hal ini tentunya kami persiapkan dengan pemenuhan SDM medis-paramedis serta peralatan canggih untuk menunjang terapi pengobatan yang lebih cepat dan lebih tepat. Bethsaida Hospital Serang juga berupaya agar pengobatan pasien dapat dilayani dengan tuntas dan paripurna (One Stop Services).',
-        'image': 'images/bethsaida_hospital_serang.jpg',
+        'image': 'assets/images/bethsaida_hospital_serang.jpg',
         'phone': '0254-5020-999',
         'address':
             'Jl. Lingkar Selatan KM. 1,8, Ds Harjatani, Kec. Kramatwatu, Serang – Banten 42161',
