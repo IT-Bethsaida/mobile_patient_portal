@@ -13,7 +13,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // Navigate to login page after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
         Navigator.pushReplacementNamed(context, '/login');
@@ -33,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
             children: [
               // Hospital Logo
               Image.asset(
-                'images/logo/logo_only.png',
+                'assets/images/logo_only.png',
                 width: 150,
                 height: 150,
                 fit: BoxFit.contain,

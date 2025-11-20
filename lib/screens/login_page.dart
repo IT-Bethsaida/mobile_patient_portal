@@ -36,8 +36,7 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _isLoading = false;
         });
-        // TODO: Navigate to home page after successful login
-        // Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
       }
     });
   }
@@ -91,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       Image.asset(
-                        'images/logo/logo_only.png',
+                        'assets/images/logo_only.png',
                         width: 150,
                         height: 150,
                         fit: BoxFit.contain,
@@ -293,7 +292,7 @@ class _LoginPageState extends State<LoginPage> {
                 // Google Login Button
                 SocialLoginButton(
                   label: 'Sign in with Google',
-                  imageIcon: const AssetImage('images/icon_google.png'),
+                  imageIcon: const AssetImage('assets/icon_google.png'),
                   backgroundColor: Colors.white,
                   borderColor: AppColors.black,
                   isLoading: _isGoogleLoading,

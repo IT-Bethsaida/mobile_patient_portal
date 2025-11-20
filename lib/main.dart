@@ -4,6 +4,8 @@ import 'package:patient_portal/core/app_theme.dart';
 import 'package:patient_portal/core/theme_provider.dart';
 import 'package:patient_portal/screens/splash_page.dart';
 import 'package:patient_portal/screens/login_page.dart';
+import 'package:patient_portal/screens/home_page.dart';
+import 'package:patient_portal/screens/hospital_information_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +31,9 @@ class MyApp extends StatelessWidget {
             routes: {
               '/': (context) => const SplashPage(),
               '/login': (context) => const LoginPage(),
+              '/home': (context) => const HomePage(),
+              '/hospital-information': (context) =>
+                  const HospitalInformationPage(),
             },
           );
         },
