@@ -101,7 +101,9 @@ class _LoginPageState extends State<LoginPage> {
                           Text(
                             'BETHSAIDA',
                             style: AppTypography.headlineLarge.copyWith(
-                              color: AppColors.primary,
+                              color: isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.primary,
                               fontFamily: 'GillSansCondensedBold',
                               fontSize: 45,
                             ),
@@ -109,7 +111,9 @@ class _LoginPageState extends State<LoginPage> {
                           Text(
                             'Hospital with Heart',
                             style: AppTypography.bodyMedium.copyWith(
-                              color: AppColors.primary,
+                              color: isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.primary,
                               fontFamily: 'BrushScript',
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
@@ -124,7 +128,12 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 48),
 
                 // Email Field
-                Text('Email', style: AppTypography.titleMedium),
+                Text(
+                  'Email',
+                  style: AppTypography.titleMedium.copyWith(
+                    color: isDarkMode ? AppColors.white : AppColors.textPrimary,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Container(
                   decoration: BoxDecoration(
@@ -140,9 +149,24 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
+                    style: TextStyle(
+                      color: isDarkMode
+                          ? AppColors.white
+                          : AppColors.textPrimary,
+                    ),
                     decoration: InputDecoration(
                       hintText: 'Enter your email',
-                      prefixIcon: const Icon(Icons.email_outlined),
+                      hintStyle: TextStyle(
+                        color: isDarkMode
+                            ? AppColors.grey500
+                            : AppColors.grey400,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: isDarkMode
+                            ? AppColors.grey400
+                            : AppColors.grey600,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide.none,
@@ -161,7 +185,12 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 24),
 
                 // Password Field
-                Text('Password', style: AppTypography.titleMedium),
+                Text(
+                  'Password',
+                  style: AppTypography.titleMedium.copyWith(
+                    color: isDarkMode ? AppColors.white : AppColors.textPrimary,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Container(
                   decoration: BoxDecoration(
@@ -177,14 +206,32 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: _passwordController,
                     obscureText: _obscurePassword,
+                    style: TextStyle(
+                      color: isDarkMode
+                          ? AppColors.white
+                          : AppColors.textPrimary,
+                    ),
                     decoration: InputDecoration(
                       hintText: 'Enter your password',
-                      prefixIcon: const Icon(Icons.lock_outlined),
+                      hintStyle: TextStyle(
+                        color: isDarkMode
+                            ? AppColors.grey500
+                            : AppColors.grey400,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.lock_outlined,
+                        color: isDarkMode
+                            ? AppColors.grey400
+                            : AppColors.grey600,
+                      ),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscurePassword
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
+                          color: isDarkMode
+                              ? AppColors.grey400
+                              : AppColors.grey600,
                         ),
                         onPressed: () {
                           setState(() {
@@ -219,7 +266,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       'Forgot Password?',
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.primary,
+                        color: isDarkMode ? AppColors.white : AppColors.primary,
                       ),
                     ),
                   ),
@@ -271,19 +318,31 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   children: [
                     Expanded(
-                      child: Divider(color: AppColors.grey400, thickness: 1),
+                      child: Divider(
+                        color: isDarkMode
+                            ? AppColors.grey600
+                            : AppColors.grey400,
+                        thickness: 1,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
                         'Or continue with',
                         style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.textSecondary,
+                          color: isDarkMode
+                              ? AppColors.grey300
+                              : AppColors.textSecondary,
                         ),
                       ),
                     ),
                     Expanded(
-                      child: Divider(color: AppColors.grey400, thickness: 1),
+                      child: Divider(
+                        color: isDarkMode
+                            ? AppColors.grey600
+                            : AppColors.grey400,
+                        thickness: 1,
+                      ),
                     ),
                   ],
                 ),
@@ -293,8 +352,10 @@ class _LoginPageState extends State<LoginPage> {
                 SocialLoginButton(
                   label: 'Sign in with Google',
                   imageIcon: const AssetImage('assets/icon_google.png'),
-                  backgroundColor: Colors.white,
-                  borderColor: AppColors.black,
+                  backgroundColor: isDarkMode
+                      ? AppColors.grey800
+                      : Colors.white,
+                  borderColor: isDarkMode ? AppColors.grey600 : AppColors.black,
                   isLoading: _isGoogleLoading,
                   isOutline: true,
                   onPressed: _handleGoogleLogin,
@@ -307,7 +368,11 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Text(
                       "Don't have an account? ",
-                      style: AppTypography.bodySmall,
+                      style: AppTypography.bodySmall.copyWith(
+                        color: isDarkMode
+                            ? AppColors.grey300
+                            : AppColors.textPrimary,
+                      ),
                     ),
                     TextButton(
                       onPressed: () {

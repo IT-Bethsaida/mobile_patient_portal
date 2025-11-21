@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_portal/core/app_typography.dart';
+import 'package:patient_portal/core/app_colors.dart';
 
 class SocialLoginButton extends StatelessWidget {
   final String label;
@@ -7,6 +8,7 @@ class SocialLoginButton extends StatelessWidget {
   final ImageProvider? imageIcon;
   final Color backgroundColor;
   final Color borderColor;
+  final Color? textColor; // Optional text color override
   final VoidCallback onPressed;
   final bool isLoading;
   final bool isOutline;
@@ -18,6 +20,7 @@ class SocialLoginButton extends StatelessWidget {
     this.imageIcon,
     required this.backgroundColor,
     this.borderColor = Colors.transparent,
+    this.textColor, // Optional text color parameter
     required this.onPressed,
     this.isLoading = false,
     this.isOutline = false,
@@ -25,6 +28,36 @@ class SocialLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
+    // Determine text color based on theme and provided parameters
+    Color getTextColor() {
+      if (textColor != null) return textColor!;
+
+      // For outline buttons, adapt to theme
+      if (isOutline) {
+        return isDarkMode ? AppColors.white : borderColor;
+      }
+
+      // For filled buttons, use contrasting color
+      return backgroundColor == Colors.white ||
+              backgroundColor.computeLuminance() > 0.5
+          ? AppColors.textPrimary
+          : AppColors.white;
+    }
+
+    // Determine loading indicator color
+    Color getLoadingColor() {
+      if (isOutline) {
+        return isDarkMode ? AppColors.white : borderColor;
+      }
+      return backgroundColor == Colors.white ||
+              backgroundColor.computeLuminance() > 0.5
+          ? AppColors.primary
+          : AppColors.white;
+    }
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -60,17 +93,22 @@ class SocialLoginButton extends StatelessWidget {
                     SizedBox(
                       width: 20,
                       height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          getLoadingColor(),
+                        ),
+                      ),
                     )
                   else if (imageIcon != null)
                     Image(image: imageIcon!, width: 20, height: 20)
                   else if (icon != null)
-                    Icon(icon, size: 20),
+                    Icon(icon, size: 20, color: getTextColor()),
                   const SizedBox(width: 12),
                   Text(
                     label,
                     style: AppTypography.titleMedium.copyWith(
-                      color: borderColor,
+                      color: getTextColor(),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
