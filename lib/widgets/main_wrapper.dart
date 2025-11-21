@@ -49,8 +49,10 @@ class _MainWrapperState extends State<MainWrapper> {
     final List<Widget> pages = [
       const HomePageContent(), // Home content without bottom nav
       const HospitalInformationPageContent(), // Hospital info content without bottom nav
-      const PlaceholderPage(title: 'Janji Temu'), // Placeholder for appointment
-      const PlaceholderPage(title: 'Profil'), // Placeholder for profile
+      const PlaceholderPage(
+        title: 'Appointment',
+      ), // Placeholder for appointment
+      const PlaceholderPage(title: 'Profile'), // Placeholder for profile
     ];
 
     return Scaffold(
@@ -71,16 +73,16 @@ class _MainWrapperState extends State<MainWrapper> {
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.grey400,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Beranda'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_hospital),
-            label: 'Rumah Sakit',
+            label: 'Hospitals',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Janji Temu',
+            icon: Icon(Icons.calendar_month),
+            label: 'Appointment',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
@@ -109,7 +111,7 @@ class PlaceholderPage extends StatelessWidget {
             Icon(Icons.construction, size: 64, color: AppColors.grey400),
             const SizedBox(height: 16),
             Text(
-              'Halaman $title',
+              '$title Page',
               style: TextStyle(
                 fontSize: 20,
                 color: AppColors.textPrimary,
@@ -118,7 +120,7 @@ class PlaceholderPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Sedang dalam pengembangan',
+              'Is going Development',
               style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
             ),
           ],

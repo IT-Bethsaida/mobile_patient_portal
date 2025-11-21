@@ -41,7 +41,7 @@ class HospitalInformationPageContent extends StatelessWidget {
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Text(
-          'Lokasi Rumah Sakit Kami',
+          'Our Hospitals',
           style: AppTypography.titleLarge.copyWith(color: AppColors.white),
         ),
       ),

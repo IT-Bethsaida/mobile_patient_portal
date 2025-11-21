@@ -12,31 +12,44 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  bool _obscurePassword = true;
+  final _phoneController = TextEditingController();
   bool _isLoading = false;
   bool _isGoogleLoading = false;
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
-  void _handleLogin() {
+  void _handlePhoneLogin() {
+    // Validate phone number
+    if (_phoneController.text.isEmpty || _phoneController.text.length < 10) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Masukkan nomor telepon yang valid'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
 
-    // Simulate login process
+    // Simulate OTP sending process
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
         setState(() {
           _isLoading = false;
         });
-        Navigator.pushReplacementNamed(context, '/home');
+        // Navigate to OTP verification page with phone number
+        Navigator.pushNamed(
+          context,
+          '/otp-verification',
+          arguments: _phoneController.text,
+        );
       }
     });
   }
@@ -90,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/images/logo_only.png',
+                        'assets/images/logo_only_bg_white.png',
                         width: 150,
                         height: 150,
                         fit: BoxFit.contain,
@@ -127,9 +140,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 48),
 
-                // Email Field
+                // Phone Number Field
                 Text(
-                  'Email',
+                  'Nomor Telepon',
                   style: AppTypography.titleMedium.copyWith(
                     color: isDarkMode ? AppColors.white : AppColors.textPrimary,
                   ),
@@ -147,22 +160,22 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   child: TextField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
                     style: TextStyle(
                       color: isDarkMode
                           ? AppColors.white
                           : AppColors.textPrimary,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Enter your email',
+                      hintText: 'Contoh: 08123456789',
                       hintStyle: TextStyle(
                         color: isDarkMode
                             ? AppColors.grey500
                             : AppColors.grey400,
                       ),
                       prefixIcon: Icon(
-                        Icons.email_outlined,
+                        Icons.phone_outlined,
                         color: isDarkMode
                             ? AppColors.grey400
                             : AppColors.grey600,
@@ -182,94 +195,17 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
 
-                // Password Field
+                // Info Text
                 Text(
-                  'Password',
-                  style: AppTypography.titleMedium.copyWith(
-                    color: isDarkMode ? AppColors.white : AppColors.textPrimary,
+                  'Kami akan mengirimkan kode OTP ke nomor telepon Anda',
+                  style: AppTypography.bodySmall.copyWith(
+                    color: isDarkMode
+                        ? AppColors.grey300
+                        : AppColors.textSecondary,
                   ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
-                    style: TextStyle(
-                      color: isDarkMode
-                          ? AppColors.white
-                          : AppColors.textPrimary,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Enter your password',
-                      hintStyle: TextStyle(
-                        color: isDarkMode
-                            ? AppColors.grey500
-                            : AppColors.grey400,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.lock_outlined,
-                        color: isDarkMode
-                            ? AppColors.grey400
-                            : AppColors.grey600,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          color: isDarkMode
-                              ? AppColors.grey400
-                              : AppColors.grey600,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: isDarkMode
-                          ? AppColors.grey800
-                          : AppColors.white,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-
-                // Forgot Password Link
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      // TODO: Navigate to forgot password page
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: AppTypography.bodySmall.copyWith(
-                        color: isDarkMode ? AppColors.white : AppColors.primary,
-                      ),
-                    ),
-                  ),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
 
@@ -286,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: _isLoading ? null : _handleLogin,
+                    onPressed: _isLoading ? null : _handlePhoneLogin,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(
@@ -309,7 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           )
-                        : Text('Login', style: AppTypography.button),
+                        : Text('Kirim OTP', style: AppTypography.button),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -328,7 +264,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        'Or continue with',
+                        'Atau lanjutkan dengan',
                         style: AppTypography.bodySmall.copyWith(
                           color: isDarkMode
                               ? AppColors.grey300
@@ -367,7 +303,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account? ",
+                      "Belum punya akun? ",
                       style: AppTypography.bodySmall.copyWith(
                         color: isDarkMode
                             ? AppColors.grey300
@@ -385,7 +321,7 @@ class _LoginPageState extends State<LoginPage> {
                         overlayColor: Colors.transparent,
                       ),
                       child: Text(
-                        'Sign Up',
+                        'Daftar',
                         style: AppTypography.bodySmall.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,

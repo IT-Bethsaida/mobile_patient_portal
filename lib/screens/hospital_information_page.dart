@@ -25,7 +25,7 @@ class HospitalInformationPage extends StatelessWidget {
       {
         'name': 'Bethsaida Hospital Serang',
         'description':
-            'ethsaida Hospital serang adalah salah satu unit bisnis dari PT Paramount Enterprise International yang telah diresmikan pada tanggal 8 Agustus 2024. Bethsaida Hospital didirikan untuk memenuhi kebutuhan layanan kesehatan bagi masyarakat di wilayah Serang, Cilegon dan sekitarnya. Hal ini tentunya kami persiapkan dengan pemenuhan SDM medis-paramedis serta peralatan canggih untuk menunjang terapi pengobatan yang lebih cepat dan lebih tepat. Bethsaida Hospital Serang juga berupaya agar pengobatan pasien dapat dilayani dengan tuntas dan paripurna (One Stop Services).',
+            'Bethsaida Hospital serang adalah salah satu unit bisnis dari PT Paramount Enterprise International yang telah diresmikan pada tanggal 8 Agustus 2024. Bethsaida Hospital didirikan untuk memenuhi kebutuhan layanan kesehatan bagi masyarakat di wilayah Serang, Cilegon dan sekitarnya. Hal ini tentunya kami persiapkan dengan pemenuhan SDM medis-paramedis serta peralatan canggih untuk menunjang terapi pengobatan yang lebih cepat dan lebih tepat. Bethsaida Hospital Serang juga berupaya agar pengobatan pasien dapat dilayani dengan tuntas dan paripurna (One Stop Services).',
         'image': 'assets/images/bethsaida_hospital_serang.jpg',
         'phone': '0254-5020-999',
         'address':
@@ -44,7 +44,7 @@ class HospitalInformationPage extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Lokasi Rumah Sakit Kami',
+          'Our Hospitals',
           style: AppTypography.titleLarge.copyWith(color: AppColors.white),
         ),
       ),

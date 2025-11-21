@@ -20,6 +20,48 @@ class _HomePageContentState extends State<HomePageContent> {
     'assets/images/promo_3.png',
   ];
 
+  final List<Map<String, dynamic>> doctors = [
+    {
+      'name': 'Dr. Sarah Johnson',
+      'specialty': 'Cardiologist',
+      'rating': 4.8,
+      'reviews': 245,
+    },
+    {
+      'name': 'Dr. Michael Chen',
+      'specialty': 'Pediatrician',
+      'rating': 4.9,
+      'reviews': 312,
+    },
+    {
+      'name': 'Dr. Amanda Williams',
+      'specialty': 'Dermatologist',
+      'rating': 4.7,
+      'reviews': 189,
+    },
+  ];
+
+  final List<Map<String, dynamic>> promos = [
+    {
+      'title': 'Medical Check-up',
+      'discount': '30% OFF',
+      'description': 'Comprehensive health screening',
+      'validUntil': '31 Dec 2024',
+    },
+    {
+      'title': 'Dental Care',
+      'discount': '25% OFF',
+      'description': 'Dental cleaning & whitening',
+      'validUntil': '15 Dec 2024',
+    },
+    {
+      'title': 'Eye Examination',
+      'discount': '20% OFF',
+      'description': 'Complete eye check-up',
+      'validUntil': '30 Nov 2024',
+    },
+  ];
+
   final List<Map<String, dynamic>> menuItems = [
     {
       'icon': Icons.local_hospital,
@@ -190,77 +232,6 @@ class _HomePageContentState extends State<HomePageContent> {
             ),
 
             // Featured Section
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppTheme.screenPaddingHorizontal,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Jadwal Vaksinasi Terbaru',
-                    style: AppTypography.titleLarge.copyWith(
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Lihat jadwal dan lokasi vaksinasi terdekat.',
-                    style: AppTypography.bodySmall.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: isDarkMode ? AppColors.grey800 : AppColors.grey100,
-                      border: Border.all(color: AppColors.grey300, width: 1),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                          ),
-                          child: Icon(
-                            Icons.vaccines,
-                            color: AppColors.primary,
-                            size: 40,
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Vaksinasi COVID-19',
-                                style: AppTypography.titleMedium.copyWith(
-                                  color: AppColors.textPrimary,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Jadwal: 20 Nov 2024',
-                                style: AppTypography.bodySmall.copyWith(
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
             const SizedBox(height: 32),
 
             // Menu Grid Section
@@ -343,6 +314,287 @@ class _HomePageContentState extends State<HomePageContent> {
                     ),
                   );
                 },
+              ),
+            ),
+
+            const SizedBox(height: 32),
+
+            // Our Doctors Section
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.screenPaddingHorizontal,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Our Doctors',
+                        style: AppTypography.titleLarge.copyWith(
+                          color: isDarkMode
+                              ? AppColors.white
+                              : AppColors.textPrimary,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'See All',
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 180,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: doctors.length,
+                      itemBuilder: (context, index) {
+                        final doctor = doctors[index];
+                        return Container(
+                          width: 150,
+                          margin: EdgeInsets.only(
+                            right: index < doctors.length - 1 ? 16 : 0,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: isDarkMode
+                                ? AppColors.grey800
+                                : AppColors.white,
+                            border: Border.all(
+                              color: isDarkMode
+                                  ? AppColors.grey700
+                                  : AppColors.grey300,
+                              width: 1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(alpha: 0.1),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  radius: 35,
+                                  backgroundColor: AppColors.primary.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 40,
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  doctor['name'] as String? ?? 'Unknown',
+                                  style: AppTypography.titleSmall.copyWith(
+                                    color: isDarkMode
+                                        ? AppColors.white
+                                        : AppColors.textPrimary,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  doctor['specialty'] as String? ?? '',
+                                  style: AppTypography.bodySmall.copyWith(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      size: 16,
+                                      color: Colors.amber,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      '${doctor['rating'] ?? 0.0}',
+                                      style: AppTypography.bodySmall.copyWith(
+                                        color: isDarkMode
+                                            ? AppColors.white
+                                            : AppColors.textPrimary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      ' (${doctor['reviews'] ?? 0})',
+                                      style: AppTypography.bodySmall.copyWith(
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 32),
+
+            // Promo Section
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppTheme.screenPaddingHorizontal,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Special Promo',
+                        style: AppTypography.titleLarge.copyWith(
+                          color: isDarkMode
+                              ? AppColors.white
+                              : AppColors.textPrimary,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'See All',
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    height: 160,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: promos.length,
+                      itemBuilder: (context, index) {
+                        final promo = promos[index];
+                        return Container(
+                          width: 280,
+                          margin: EdgeInsets.only(
+                            right: index < promos.length - 1 ? 16 : 0,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                AppColors.primary,
+                                AppColors.primary.withValues(alpha: 0.7),
+                              ],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(alpha: 0.3),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        promo['title'] as String? ?? '',
+                                        style: AppTypography.titleMedium
+                                            .copyWith(
+                                              color: AppColors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 6,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        promo['discount'] as String? ?? '',
+                                        style: AppTypography.bodySmall.copyWith(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  promo['description'] as String? ?? '',
+                                  style: AppTypography.bodyMedium.copyWith(
+                                    color: AppColors.white.withValues(
+                                      alpha: 0.9,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.access_time,
+                                      size: 14,
+                                      color: AppColors.white.withValues(
+                                        alpha: 0.8,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      'Valid until ${promo['validUntil'] as String? ?? ''}',
+                                      style: AppTypography.bodySmall.copyWith(
+                                        color: AppColors.white.withValues(
+                                          alpha: 0.8,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
 
