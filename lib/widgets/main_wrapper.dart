@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/widgets/home_page_content.dart';
 import 'package:patient_portal/widgets/hospital_information_page_content.dart';
+import 'package:patient_portal/widgets/profile_page_content.dart';
 
 class MainWrapper extends StatefulWidget {
   final int initialIndex;
@@ -52,7 +53,7 @@ class _MainWrapperState extends State<MainWrapper> {
       const PlaceholderPage(
         title: 'Appointment',
       ), // Placeholder for appointment
-      const PlaceholderPage(title: 'Profile'), // Placeholder for profile
+      const ProfilePageContent(), // Profile page
     ];
 
     return Scaffold(
