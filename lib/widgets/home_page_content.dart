@@ -264,6 +264,11 @@ class _HomePageContentState extends State<HomePageContent> {
                                 context,
                                 '/hospital-information',
                               );
+                            } else if (item['label'] == 'Outpatient\nHistory') {
+                              Navigator.pushNamed(
+                                context,
+                                '/outpatient-history',
+                              );
                             }
                           },
                     child: Column(

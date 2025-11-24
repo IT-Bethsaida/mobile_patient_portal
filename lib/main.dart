@@ -5,6 +5,7 @@ import 'package:patient_portal/core/theme_provider.dart';
 import 'package:patient_portal/screens/splash_page.dart';
 import 'package:patient_portal/screens/login_page.dart';
 import 'package:patient_portal/screens/otp_verification_page.dart';
+import 'package:patient_portal/screens/outpatient_history_page.dart';
 import 'package:patient_portal/widgets/main_wrapper.dart';
 
 void main() {
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
               '/home': (context) => const MainWrapper(),
               '/hospital-information': (context) =>
                   const MainWrapper(initialIndex: 1),
+              '/outpatient-history': (context) => const OutpatientHistoryPage(),
             },
           );
         },
