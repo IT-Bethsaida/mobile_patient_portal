@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/widgets/home_page_content.dart';
 import 'package:patient_portal/widgets/hospital_information_page_content.dart';
+import 'package:patient_portal/widgets/appointment_page_content.dart';
 import 'package:patient_portal/widgets/profile_page_content.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -50,9 +51,7 @@ class _MainWrapperState extends State<MainWrapper> {
     final List<Widget> pages = [
       const HomePageContent(), // Home content without bottom nav
       const HospitalInformationPageContent(), // Hospital info content without bottom nav
-      const PlaceholderPage(
-        title: 'Appointment',
-      ), // Placeholder for appointment
+      const AppointmentPageContent(), // Appointment page
       const ProfilePageContent(), // Profile page
     ];
 
