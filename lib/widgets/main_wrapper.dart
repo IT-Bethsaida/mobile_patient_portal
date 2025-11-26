@@ -3,6 +3,7 @@ import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/widgets/home_page_content.dart';
 import 'package:patient_portal/widgets/hospital_information_page_content.dart';
 import 'package:patient_portal/widgets/appointment_page_content.dart';
+import 'package:patient_portal/widgets/medical_record_page_content.dart';
 import 'package:patient_portal/widgets/profile_page_content.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -50,8 +51,8 @@ class _MainWrapperState extends State<MainWrapper> {
     // Pages for each tab
     final List<Widget> pages = [
       const HomePageContent(), // Home content without bottom nav
-      const HospitalInformationPageContent(), // Hospital info content without bottom nav
       const AppointmentPageContent(), // Appointment page
+      const MedicalRecordPageContent(), // Medical Record page
       const ProfilePageContent(), // Profile page
     ];
 
@@ -75,12 +76,12 @@ class _MainWrapperState extends State<MainWrapper> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_hospital),
-            label: 'Hospitals',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
             label: 'Appointment',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.medical_information),
+            label: 'Medical Record',
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],

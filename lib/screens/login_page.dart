@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       Image.asset(
-                        'assets/images/logo_only_bg_white.png',
+                        'assets/images/logo_only.png',
                         width: 150,
                         height: 150,
                         fit: BoxFit.contain,
@@ -312,7 +312,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        // TODO: Navigate to sign up page
+                        Navigator.pushNamed(context, '/register');
                       },
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,

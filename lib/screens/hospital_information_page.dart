@@ -40,136 +40,171 @@ class HospitalInformationPage extends StatelessWidget {
         foregroundColor: AppColors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: AppColors.white),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Our Hospitals',
-          style: AppTypography.titleLarge.copyWith(color: AppColors.white),
+          'Hospital Information',
+          style: AppTypography.headlineSmall.copyWith(color: AppColors.white),
         ),
+        centerTitle: true,
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(AppTheme.screenPaddingHorizontal),
         itemCount: hospitals.length,
         itemBuilder: (context, index) {
           final hospital = hospitals[index];
-          return InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HospitalDetailPage(hospital: hospital),
+          return Container(
+            margin: const EdgeInsets.only(bottom: 24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: isDarkMode ? AppColors.grey800 : AppColors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.grey300.withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
                 ),
-              );
-            },
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 24),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: isDarkMode ? AppColors.grey800 : AppColors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.grey300.withValues(alpha: 0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Hospital Image
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
                   ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Hospital Image
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                    ),
-                    child: Container(
-                      height: 160,
-                      width: double.infinity,
-                      color: AppColors.grey200,
-                      child: Image.asset(
-                        hospital['image'],
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                            child: Center(
-                              child: Icon(
-                                Icons.local_hospital,
-                                color: AppColors.primary,
-                                size: 48,
-                              ),
+                  child: Container(
+                    height: 160,
+                    width: double.infinity,
+                    color: AppColors.grey200,
+                    child: Image.asset(
+                      hospital['image'],
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: AppColors.primary.withValues(alpha: 0.1),
+                          child: Center(
+                            child: Icon(
+                              Icons.local_hospital,
+                              color: AppColors.primary,
+                              size: 48,
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ),
+                ),
 
-                  // Hospital Info
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          hospital['name'],
-                          style: AppTypography.titleMedium.copyWith(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w600,
-                          ),
+                // Hospital Info
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        hospital['name'],
+                        style: AppTypography.titleMedium.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
                         ),
-                        const SizedBox(height: 8),
-                        Text(
-                          hospital['description'],
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypography.bodySmall.copyWith(
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        hospital['description'],
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Contact Info
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.phone,
+                            size: 16,
                             color: AppColors.textSecondary,
                           ),
-                        ),
-                        const SizedBox(height: 16),
+                          const SizedBox(width: 8),
+                          Text(
+                            hospital['phone'],
+                            style: AppTypography.bodySmall.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.textPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 16,
+                            color: AppColors.textSecondary,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              hospital['address'],
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTypography.bodySmall.copyWith(
+                                color: isDarkMode
+                                    ? AppColors.white
+                                    : AppColors.textPrimary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
 
-                        // Action Buttons
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            _buildActionButton(
-                              icon: Icons.phone,
-                              label: 'Telepon',
-                              onTap: () {
-                                // TODO: Implement phone call
-                              },
-                            ),
-                            _buildActionButton(
-                              icon: Icons.directions,
-                              label: 'Arah',
-                              onTap: () {
-                                // TODO: Implement directions
-                              },
-                            ),
-                            _buildActionButton(
-                              icon: Icons.more_horiz,
-                              label: 'Detail',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        HospitalDetailPage(hospital: hospital),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      // Action Buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildActionButton(
+                            icon: Icons.phone,
+                            label: 'Telepon',
+                            onTap: () {
+                              // TODO: Implement phone call
+                            },
+                          ),
+                          _buildActionButton(
+                            icon: Icons.directions,
+                            label: 'Arah',
+                            onTap: () {
+                              // TODO: Implement directions
+                            },
+                          ),
+                          _buildActionButton(
+                            icon: Icons.info_outline,
+                            label: 'Info',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      HospitalDetailPage(hospital: hospital),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
@@ -200,81 +235,6 @@ class HospitalInformationPage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  void _showHospitalDetail(
-    BuildContext context,
-    Map<String, dynamic> hospital,
-  ) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                hospital['name'],
-                style: AppTypography.titleLarge.copyWith(
-                  color: AppColors.primary,
-                ),
-              ),
-              const SizedBox(height: 16),
-              _buildDetailRow(
-                icon: Icons.location_on,
-                text: hospital['address'],
-              ),
-              const SizedBox(height: 12),
-              _buildDetailRow(icon: Icons.phone, text: hospital['phone']),
-              const SizedBox(height: 12),
-              _buildDetailRow(icon: Icons.access_time, text: 'Buka 24 Jam'),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    'Tutup',
-                    style: AppTypography.button.copyWith(
-                      color: AppColors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildDetailRow({required IconData icon, required String text}) {
-    return Row(
-      children: [
-        Icon(icon, color: AppColors.primary, size: 20),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            text,
-            style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.textPrimary,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -4,8 +4,10 @@ import 'package:patient_portal/core/app_theme.dart';
 import 'package:patient_portal/core/theme_provider.dart';
 import 'package:patient_portal/screens/splash_page.dart';
 import 'package:patient_portal/screens/login_page.dart';
+import 'package:patient_portal/screens/register_page.dart';
 import 'package:patient_portal/screens/otp_verification_page.dart';
 import 'package:patient_portal/screens/outpatient_history_page.dart';
+import 'package:patient_portal/screens/hospital_information_page.dart';
 import 'package:patient_portal/widgets/main_wrapper.dart';
 
 void main() {
@@ -32,10 +34,11 @@ class MyApp extends StatelessWidget {
             routes: {
               '/': (context) => const SplashPage(),
               '/login': (context) => const LoginPage(),
+              '/register': (context) => const RegisterPage(),
               '/otp-verification': (context) => const OtpVerificationPage(),
               '/home': (context) => const MainWrapper(),
               '/hospital-information': (context) =>
-                  const MainWrapper(initialIndex: 1),
+                  const HospitalInformationPage(),
               '/outpatient-history': (context) => const OutpatientHistoryPage(),
             },
           );
