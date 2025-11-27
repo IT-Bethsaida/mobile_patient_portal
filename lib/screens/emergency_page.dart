@@ -24,7 +24,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
     {
       'name': 'Bethsaida Hospital Serang',
       'address': 'Jl. Raya Serang KM 12, Serang, Banten',
-      'phone': '0812-8111-9999',
+      'phone': '0254-5020-999',
       'distance': '15.3 km',
       'emergencyPhone': '1500990',
       'image': 'assets/images/bethsaida_hospital_serang.jpg',
@@ -47,82 +47,6 @@ class _EmergencyPageState extends State<EmergencyPage> {
         ),
       );
     }
-  }
-
-  void _callAmbulance() {
-    _callEmergency('119'); // Indonesian ambulance number
-    _showEmergencyDialog();
-  }
-
-  void _callHospital(String phoneNumber) {
-    _callEmergency(phoneNumber);
-  }
-
-  void _showEmergencyDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        backgroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
-          children: [
-            Icon(Icons.warning, color: AppColors.error, size: 28),
-            const SizedBox(width: 12),
-            Text(
-              'Emergency Alert',
-              style: AppTypography.titleLarge.copyWith(
-                color: AppColors.error,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Emergency services have been notified. Help is on the way!',
-              style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.textPrimary,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: AppColors.error.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: AppColors.error.withValues(alpha: 0.3),
-                ),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.info_outline, color: AppColors.error, size: 20),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Stay calm and provide your location details to emergency responders.',
-                      style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.error,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('OK', style: TextStyle(color: AppColors.primary)),
-          ),
-        ],
-      ),
-    );
   }
 
   @override

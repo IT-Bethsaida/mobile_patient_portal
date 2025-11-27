@@ -335,9 +335,12 @@ class _HomePageContentState extends State<HomePageContent> {
                                   '/hospital-information',
                                 );
                               } else if (labelKey == 'doctors') {
-                                Navigator.pushNamed(context, '/select-doctor');
+                                Navigator.pushNamed(context, '/specialists');
                               } else if (labelKey == 'premiumServices') {
-                                // Navigate to premium services page
+                                Navigator.pushNamed(
+                                  context,
+                                  '/premium-services',
+                                );
                               } else if (labelKey == 'seeAll') {
                                 Navigator.pushNamed(context, '/all-services');
                               }

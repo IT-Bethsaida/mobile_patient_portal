@@ -72,7 +72,7 @@
   "@enterValidPhoneNumber": {
     "description": "Error message for invalid phone number"
   },
-  "hospitalsInformation": "Hospitals\nInformation",
+  "hospitalsInformation": "Hospitals",
   "@hospitalsInformation": {
     "description": "Menu item for hospitals information"
   },

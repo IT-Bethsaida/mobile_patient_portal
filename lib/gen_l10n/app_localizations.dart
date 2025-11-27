@@ -209,7 +209,7 @@ abstract class AppLocalizations {
   /// Menu item untuk informasi rumah sakit
   ///
   /// In id, this message translates to:
-  /// **'Informasi\nRumah Sakit'**
+  /// **'Rumah Sakit'**
   String get hospitalsInformation;
 
   /// Menu item untuk riwayat rawat jalan

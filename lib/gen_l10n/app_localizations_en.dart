@@ -63,7 +63,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enterValidPhoneNumber => 'Enter a valid phone number';
 
   @override
-  String get hospitalsInformation => 'Hospitals\nInformation';
+  String get hospitalsInformation => 'Hospitals';
 
   @override
   String get outpatientHistory => 'Outpatient\nHistory';

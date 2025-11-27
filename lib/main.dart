@@ -15,7 +15,9 @@ import 'package:patient_portal/screens/settings_page.dart';
 import 'package:patient_portal/screens/select_doctor_page.dart';
 import 'package:patient_portal/screens/all_services_page.dart';
 import 'package:patient_portal/screens/search_doctor_page.dart';
+import 'package:patient_portal/screens/specialists_page.dart';
 import 'package:patient_portal/screens/emergency_page.dart';
+import 'package:patient_portal/screens/premium_services_page.dart';
 import 'package:patient_portal/widgets/main_wrapper.dart';
 
 void main() {
@@ -69,7 +71,9 @@ class MyApp extends StatelessWidget {
               '/settings': (context) => const SettingsPage(),
               '/all-services': (context) => const AllServicesPage(),
               '/search-doctor': (context) => const SearchDoctorPage(),
+              '/specialists': (context) => const SpecialistsPage(),
               '/emergency': (context) => const EmergencyPage(),
+              '/premium-services': (context) => const PremiumServicesPage(),
             },
           );
         },

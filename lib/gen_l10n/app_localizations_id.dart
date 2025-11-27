@@ -63,7 +63,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get enterValidPhoneNumber => 'Masukkan nomor telepon yang valid';
 
   @override
-  String get hospitalsInformation => 'Informasi\nRumah Sakit';
+  String get hospitalsInformation => 'Rumah Sakit';
 
   @override
   String get outpatientHistory => 'Riwayat\nRawat Jalan';

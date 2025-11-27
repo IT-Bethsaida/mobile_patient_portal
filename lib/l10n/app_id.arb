@@ -72,7 +72,7 @@
   "@enterValidPhoneNumber": {
     "description": "Pesan validasi untuk nomor telepon yang tidak sesuai"
   },
-  "hospitalsInformation": "Informasi\nRumah Sakit",
+  "hospitalsInformation": "Rumah Sakit",
   "@hospitalsInformation": {
     "description": "Menu item untuk informasi rumah sakit"
   },

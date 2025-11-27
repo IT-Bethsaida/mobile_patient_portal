@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/widgets/home_page_content.dart';
-import 'package:patient_portal/widgets/hospital_information_page_content.dart';
 import 'package:patient_portal/widgets/appointment_page_content.dart';
 import 'package:patient_portal/widgets/medical_record_page_content.dart';
 import 'package:patient_portal/widgets/profile_page_content.dart';
