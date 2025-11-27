@@ -84,6 +84,18 @@
   "@laboratory": {
     "description": "Menu item untuk laboratorium"
   },
+  "quiz": "Kuis",
+  "@quiz": {
+    "description": "Menu item untuk kuis"
+  },
+  "doctors": "Spesialis",
+  "@doctors": {
+    "description": "Menu item untuk spesialis"
+  },
+  "premiumServices": "Layanan Unggulan",
+  "@premiumServices": {
+    "description": "Menu item untuk layanan unggulan"
+  },
   "radiology": "Radiologi",
   "@radiology": {
     "description": "Menu item untuk radiologi"
@@ -96,10 +108,6 @@
   "@selfPayment": {
     "description": "Menu item untuk pembayaran mandiri"
   },
-  "quiz": "Kuis",
-  "@quiz": {
-    "description": "Menu item untuk kuis"
-  },
   "selfCheckin": "Check-in Mandiri",
   "@selfCheckin": {
     "description": "Menu item untuk check-in mandiri"
@@ -111,5 +119,27 @@
   "specialPromo": "Promo Spesial",
   "@specialPromo": {
     "description": "Judul bagian untuk promosi spesial"
+  },
+  "searchDoctor": "Cari Dokter",
+  "@searchDoctor": {
+    "description": "Teks tombol untuk mencari dokter"
+  },
+  "emergency": "Darurat",
+  "@emergency": {
+    "description": "Teks tombol darurat"
+  },
+  "homeWelcomeTitle": "Selamat datang di {appName}",
+  "@homeWelcomeTitle": {
+    "description": "Sapaan beranda yang menyertakan nama aplikasi",
+    "placeholders": {
+      "appName": {
+        "type": "String",
+        "description": "Nama aplikasi singkat"
+      }
+    }
+  },
+  "homeWelcomeSubtitle": "Bagaimana kami dapat membantu Anda hari ini?",
+  "@homeWelcomeSubtitle": {
+    "description": "Teks bantuan kedua di bawah sapaan beranda"
   }
 }

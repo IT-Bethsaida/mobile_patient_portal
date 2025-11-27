@@ -72,6 +72,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get laboratory => 'Laboratory';
 
   @override
+  String get quiz => 'Quiz';
+
+  @override
+  String get doctors => 'Specialists';
+
+  @override
+  String get premiumServices => 'Premium Services';
+
+  @override
   String get radiology => 'Radiology';
 
   @override
@@ -81,9 +90,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selfPayment => 'Self Payment';
 
   @override
-  String get quiz => 'Quiz';
-
-  @override
   String get selfCheckin => 'Self Checkin';
 
   @override
@@ -91,4 +97,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get specialPromo => 'Special Promo';
+
+  @override
+  String get searchDoctor => 'Search Doctor';
+
+  @override
+  String get emergency => 'Emergency';
+
+  @override
+  String homeWelcomeTitle(String appName) {
+    return 'Welcome to $appName';
+  }
+
+  @override
+  String get homeWelcomeSubtitle => 'How can we help you today?';
 }

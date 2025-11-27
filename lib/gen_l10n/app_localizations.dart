@@ -224,6 +224,24 @@ abstract class AppLocalizations {
   /// **'Laboratorium'**
   String get laboratory;
 
+  /// Menu item untuk kuis
+  ///
+  /// In id, this message translates to:
+  /// **'Kuis'**
+  String get quiz;
+
+  /// Menu item untuk spesialis
+  ///
+  /// In id, this message translates to:
+  /// **'Spesialis'**
+  String get doctors;
+
+  /// Menu item untuk layanan unggulan
+  ///
+  /// In id, this message translates to:
+  /// **'Layanan Unggulan'**
+  String get premiumServices;
+
   /// Menu item untuk radiologi
   ///
   /// In id, this message translates to:
@@ -242,12 +260,6 @@ abstract class AppLocalizations {
   /// **'Pembayaran Mandiri'**
   String get selfPayment;
 
-  /// Menu item untuk kuis
-  ///
-  /// In id, this message translates to:
-  /// **'Kuis'**
-  String get quiz;
-
   /// Menu item untuk check-in mandiri
   ///
   /// In id, this message translates to:
@@ -265,6 +277,30 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Promo Spesial'**
   String get specialPromo;
+
+  /// Teks tombol untuk mencari dokter
+  ///
+  /// In id, this message translates to:
+  /// **'Cari Dokter'**
+  String get searchDoctor;
+
+  /// Teks tombol darurat
+  ///
+  /// In id, this message translates to:
+  /// **'Darurat'**
+  String get emergency;
+
+  /// Sapaan beranda yang menyertakan nama aplikasi
+  ///
+  /// In id, this message translates to:
+  /// **'Selamat datang di {appName}'**
+  String homeWelcomeTitle(String appName);
+
+  /// Teks bantuan kedua di bawah sapaan beranda
+  ///
+  /// In id, this message translates to:
+  /// **'Bagaimana kami dapat membantu Anda hari ini?'**
+  String get homeWelcomeSubtitle;
 }
 
 class _AppLocalizationsDelegate

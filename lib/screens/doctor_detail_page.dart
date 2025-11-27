@@ -179,7 +179,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
   }
 
   List<String> get availableTimeSlots {
-    final doctorSchedule = doctorSchedules[widget.doctor['name']];
+    final doctorName = widget.doctor['name'] as String? ?? '';
+    final doctorSchedule = doctorSchedules[doctorName];
     if (doctorSchedule == null) return [];
 
     final schedules = doctorSchedule['schedules'] as List<dynamic>;
@@ -317,7 +318,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    widget.doctor['name'],
+                    widget.doctor['name'] as String? ?? 'Unknown Doctor',
                     style: AppTypography.headlineMedium.copyWith(
                       color: AppColors.white,
                       fontWeight: FontWeight.bold,
@@ -337,13 +338,14 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                     children: [
                       _buildInfoChip(
                         Icons.work_outline,
-                        widget.doctor['experience'],
+                        widget.doctor['experience'] as String? ??
+                            'Experience not specified',
                         isDarkMode,
                       ),
                       const SizedBox(width: 12),
                       _buildInfoChip(
                         Icons.star,
-                        '${widget.doctor['rating']} (${widget.doctor['reviews']})',
+                        '${widget.doctor['rating'] ?? 0.0} (${widget.doctor['reviews'] ?? 0})',
                         isDarkMode,
                         iconColor: Colors.amber,
                       ),
@@ -378,7 +380,8 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    widget.doctor['education'],
+                    widget.doctor['education'] as String? ??
+                        'Education not specified',
                     style: AppTypography.bodySmall.copyWith(
                       color: AppColors.white.withValues(alpha: 0.8),
                     ),
@@ -824,7 +827,7 @@ class _DoctorDetailPageState extends State<DoctorDetailPage> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Your appointment with ${widget.doctor['name']} has been successfully booked.',
+              'Your appointment with ${widget.doctor['name'] as String? ?? 'the doctor'} has been successfully booked.',
               style: AppTypography.bodyMedium.copyWith(
                 color: AppColors.textSecondary,
               ),

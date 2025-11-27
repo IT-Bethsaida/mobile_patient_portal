@@ -12,6 +12,10 @@ import 'package:patient_portal/screens/otp_verification_page.dart';
 import 'package:patient_portal/screens/outpatient_history_page.dart';
 import 'package:patient_portal/screens/hospital_information_page.dart';
 import 'package:patient_portal/screens/settings_page.dart';
+import 'package:patient_portal/screens/select_doctor_page.dart';
+import 'package:patient_portal/screens/all_services_page.dart';
+import 'package:patient_portal/screens/search_doctor_page.dart';
+import 'package:patient_portal/screens/emergency_page.dart';
 import 'package:patient_portal/widgets/main_wrapper.dart';
 
 void main() {
@@ -58,7 +62,14 @@ class MyApp extends StatelessWidget {
               '/hospital-information': (context) =>
                   const HospitalInformationPage(),
               '/outpatient-history': (context) => const OutpatientHistoryPage(),
+              '/select-doctor': (context) => const SelectDoctorPage(
+                hospital: 'Bethsaida Hospital Gading Serpong',
+                specialty: 'General Practitioner',
+              ),
               '/settings': (context) => const SettingsPage(),
+              '/all-services': (context) => const AllServicesPage(),
+              '/search-doctor': (context) => const SearchDoctorPage(),
+              '/emergency': (context) => const EmergencyPage(),
             },
           );
         },

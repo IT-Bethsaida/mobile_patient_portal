@@ -72,6 +72,15 @@ class AppLocalizationsId extends AppLocalizations {
   String get laboratory => 'Laboratorium';
 
   @override
+  String get quiz => 'Kuis';
+
+  @override
+  String get doctors => 'Spesialis';
+
+  @override
+  String get premiumServices => 'Layanan Unggulan';
+
+  @override
   String get radiology => 'Radiologi';
 
   @override
@@ -81,9 +90,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get selfPayment => 'Pembayaran Mandiri';
 
   @override
-  String get quiz => 'Kuis';
-
-  @override
   String get selfCheckin => 'Check-in Mandiri';
 
   @override
@@ -91,4 +97,19 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get specialPromo => 'Promo Spesial';
+
+  @override
+  String get searchDoctor => 'Cari Dokter';
+
+  @override
+  String get emergency => 'Darurat';
+
+  @override
+  String homeWelcomeTitle(String appName) {
+    return 'Selamat datang di $appName';
+  }
+
+  @override
+  String get homeWelcomeSubtitle =>
+      'Bagaimana kami dapat membantu Anda hari ini?';
 }

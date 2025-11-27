@@ -84,6 +84,18 @@
   "@laboratory": {
     "description": "Menu item for laboratory"
   },
+  "quiz": "Quiz",
+  "@quiz": {
+    "description": "Menu item for quiz"
+  },
+  "doctors": "Specialists",
+  "@doctors": {
+    "description": "Menu item for specialists"
+  },
+  "premiumServices": "Premium Services",
+  "@premiumServices": {
+    "description": "Menu item for premium services"
+  },
   "radiology": "Radiology",
   "@radiology": {
     "description": "Menu item for radiology"
@@ -96,10 +108,6 @@
   "@selfPayment": {
     "description": "Menu item for self payment"
   },
-  "quiz": "Quiz",
-  "@quiz": {
-    "description": "Menu item for quiz"
-  },
   "selfCheckin": "Self Checkin",
   "@selfCheckin": {
     "description": "Menu item for self checkin"
@@ -111,5 +119,27 @@
   "specialPromo": "Special Promo",
   "@specialPromo": {
     "description": "Section title for special promotions"
+  },
+  "searchDoctor": "Search Doctor",
+  "@searchDoctor": {
+    "description": "Button text for searching doctors"
+  },
+  "emergency": "Emergency",
+  "@emergency": {
+    "description": "Emergency button text"
+  },
+  "homeWelcomeTitle": "Welcome to {appName}",
+  "@homeWelcomeTitle": {
+    "description": "Home header greeting that includes the app name",
+    "placeholders": {
+      "appName": {
+        "type": "String",
+        "description": "Short app name"
+      }
+    }
+  },
+  "homeWelcomeSubtitle": "How can we help you today?",
+  "@homeWelcomeSubtitle": {
+    "description": "Secondary helper text shown under the home greeting"
   }
 }
