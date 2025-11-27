@@ -35,30 +35,30 @@ class _AppointmentPageContentState extends State<AppointmentPageContent>
   ];
 
   final List<Map<String, dynamic>> pastAppointments = [
-    {
-      'doctorName': 'Dr. Amanda Williams',
-      'specialty': 'Dermatologist',
-      'date': '2024-11-15',
-      'time': '09:00 AM',
-      'hospital': 'Bethsaida Hospital Gading Serpong',
-      'status': 'completed',
-    },
-    {
-      'doctorName': 'Dr. Sarah Johnson',
-      'specialty': 'Cardiologist',
-      'date': '2024-10-20',
-      'time': '11:00 AM',
-      'hospital': 'Bethsaida Hospital Gading Serpong',
-      'status': 'completed',
-    },
-    {
-      'doctorName': 'Dr. Michael Chen',
-      'specialty': 'Pediatrician',
-      'date': '2024-09-10',
-      'time': '03:00 PM',
-      'hospital': 'Bethsaida Hospital Serang',
-      'status': 'cancelled',
-    },
+    // {
+    //   'doctorName': 'Dr. Amanda Williams',
+    //   'specialty': 'Dermatologist',
+    //   'date': '2024-11-15',
+    //   'time': '09:00 AM',
+    //   'hospital': 'Bethsaida Hospital Gading Serpong',
+    //   'status': 'completed',
+    // },
+    // {
+    //   'doctorName': 'Dr. Sarah Johnson',
+    //   'specialty': 'Cardiologist',
+    //   'date': '2024-10-20',
+    //   'time': '11:00 AM',
+    //   'hospital': 'Bethsaida Hospital Gading Serpong',
+    //   'status': 'completed',
+    // },
+    // {
+    //   'doctorName': 'Dr. Michael Chen',
+    //   'specialty': 'Pediatrician',
+    //   'date': '2024-09-10',
+    //   'time': '03:00 PM',
+    //   'hospital': 'Bethsaida Hospital Serang',
+    //   'status': 'cancelled',
+    // },
   ];
 
   @override
@@ -267,7 +267,9 @@ class _AppointmentPageContentState extends State<AppointmentPageContent>
                         foregroundColor: AppColors.primary,
                         backgroundColor: AppColors.white,
                         side: BorderSide(
-                          color: isDarkMode ? AppColors.grey600 : AppColors.grey300,
+                          color: isDarkMode
+                              ? AppColors.grey600
+                              : AppColors.grey300,
                           width: 1.5,
                         ),
                         shape: RoundedRectangleBorder(
@@ -312,10 +314,7 @@ class _AppointmentPageContentState extends State<AppointmentPageContent>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.cancel_outlined,
-                            size: 18,
-                          ),
+                          const Icon(Icons.cancel_outlined, size: 18),
                           const SizedBox(width: 8),
                           Text(
                             'Cancel',

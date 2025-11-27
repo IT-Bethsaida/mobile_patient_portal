@@ -127,16 +127,6 @@ class ProfilePageContent extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   _buildMenuCard(
-                    icon: Icons.lock,
-                    title: 'Ubah Password',
-                    subtitle: 'Ganti password akun Anda',
-                    isDarkMode: isDarkMode,
-                    onTap: () {
-                      _showChangePasswordDialog(context);
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  _buildMenuCard(
                     icon: Icons.notifications,
                     title: 'Notifikasi',
                     subtitle: 'Atur preferensi notifikasi',
@@ -153,6 +143,16 @@ class ProfilePageContent extends StatelessWidget {
                     isDarkMode: isDarkMode,
                     onTap: () {
                       // TODO: Navigate to help & support
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  _buildMenuCard(
+                    icon: Icons.settings,
+                    title: 'Pengaturan',
+                    subtitle: 'Pengaturan aplikasi',
+                    isDarkMode: isDarkMode,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/settings');
                     },
                   ),
                   const SizedBox(height: 12),
@@ -438,142 +438,6 @@ class ProfilePageContent extends StatelessWidget {
                   ),
                   child: Text(
                     'Simpan Perubahan',
-                    style: AppTypography.titleSmall.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showChangePasswordDialog(BuildContext context) {
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            color: isDarkMode ? AppColors.grey900 : AppColors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Title
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Ubah Password',
-                    style: AppTypography.titleLarge.copyWith(
-                      color: isDarkMode
-                          ? AppColors.white
-                          : AppColors.textPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: isDarkMode
-                          ? AppColors.white
-                          : AppColors.textPrimary,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-
-              // Current Password Field
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password Lama',
-                  hintText: 'Masukkan password lama',
-                  prefixIcon: const Icon(Icons.lock_outline),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  filled: true,
-                  fillColor: isDarkMode ? AppColors.grey800 : AppColors.grey100,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // New Password Field
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password Baru',
-                  hintText: 'Masukkan password baru',
-                  prefixIcon: const Icon(Icons.lock),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  filled: true,
-                  fillColor: isDarkMode ? AppColors.grey800 : AppColors.grey100,
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Confirm New Password Field
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Konfirmasi Password Baru',
-                  hintText: 'Masukkan ulang password baru',
-                  prefixIcon: const Icon(Icons.lock),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  filled: true,
-                  fillColor: isDarkMode ? AppColors.grey800 : AppColors.grey100,
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // Submit Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // TODO: Implement change password logic
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Password berhasil diubah'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    'Ubah Password',
                     style: AppTypography.titleSmall.copyWith(
                       color: AppColors.white,
                       fontWeight: FontWeight.w600,

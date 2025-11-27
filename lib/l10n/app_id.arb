@@ -1,0 +1,115 @@
+{
+  "@@locale": "id",
+  "appName": "Bethsaida Hospital",
+  "@appName": {
+    "description": "Nama lengkap aplikasi"
+  },
+  "shortAppName": "Bethsaida",
+  "@shortAppName": {
+    "description": "Nama singkat aplikasi"
+  },
+  "tagline": "Hospital with Heart",
+  "@tagline": {
+    "description": "Slogan utama aplikasi"
+  },
+  "loading": "Memuat...",
+  "@loading": {
+    "description": "Teks indikator saat proses berjalan"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Teks untuk menampilkan pesan error umum"
+  },
+  "success": "Berhasil",
+  "@success": {
+    "description": "Teks untuk menampilkan pesan sukses umum"
+  },
+  "comingSoon": "segera hadir",
+  "@comingSoon": {
+    "description": "Teks untuk fitur yang akan segera hadir"
+  },
+  "seeAll": "Lihat Semua",
+  "@seeAll": {
+    "description": "Tombol untuk melihat semua item"
+  },
+  "validUntil": "Berlaku hingga",
+  "@validUntil": {
+    "description": "Teks awalan untuk tanggal berlaku promo"
+  },
+  "phoneNumber": "Nomor Telepon",
+  "@phoneNumber": {
+    "description": "Label untuk input nomor telepon"
+  },
+  "phoneNumberHint": "Contoh: 08123456789",
+  "@phoneNumberHint": {
+    "description": "Contoh format nomor telepon"
+  },
+  "sendOTP": "Kirim OTP",
+  "@sendOTP": {
+    "description": "Tombol untuk mengirim kode OTP"
+  },
+  "otpInfo": "Kami akan mengirimkan kode OTP ke nomor telepon Anda",
+  "@otpInfo": {
+    "description": "Informasi bahwa OTP akan dikirim ke nomor pengguna"
+  },
+  "orContinueWith": "Atau lanjutkan dengan",
+  "@orContinueWith": {
+    "description": "Teks pemisah metode login alternatif"
+  },
+  "signInWithGoogle": "Sign in with Google",
+  "@signInWithGoogle": {
+    "description": "Tombol login menggunakan akun Google"
+  },
+  "noAccount": "Belum punya akun?",
+  "@noAccount": {
+    "description": "Teks untuk menanyakan pengguna jika belum memiliki akun"
+  },
+  "register": "Daftar",
+  "@register": {
+    "description": "Tombol pendaftaran akun baru"
+  },
+  "enterValidPhoneNumber": "Masukkan nomor telepon yang valid",
+  "@enterValidPhoneNumber": {
+    "description": "Pesan validasi untuk nomor telepon yang tidak sesuai"
+  },
+  "hospitalsInformation": "Informasi\nRumah Sakit",
+  "@hospitalsInformation": {
+    "description": "Menu item untuk informasi rumah sakit"
+  },
+  "outpatientHistory": "Riwayat\nRawat Jalan",
+  "@outpatientHistory": {
+    "description": "Menu item untuk riwayat rawat jalan"
+  },
+  "laboratory": "Laboratorium",
+  "@laboratory": {
+    "description": "Menu item untuk laboratorium"
+  },
+  "radiology": "Radiologi",
+  "@radiology": {
+    "description": "Menu item untuk radiologi"
+  },
+  "selfTest": "Tes Mandiri",
+  "@selfTest": {
+    "description": "Menu item untuk tes mandiri"
+  },
+  "selfPayment": "Pembayaran Mandiri",
+  "@selfPayment": {
+    "description": "Menu item untuk pembayaran mandiri"
+  },
+  "quiz": "Kuis",
+  "@quiz": {
+    "description": "Menu item untuk kuis"
+  },
+  "selfCheckin": "Check-in Mandiri",
+  "@selfCheckin": {
+    "description": "Menu item untuk check-in mandiri"
+  },
+  "ourDoctors": "Dokter Kami",
+  "@ourDoctors": {
+    "description": "Judul bagian untuk daftar dokter"
+  },
+  "specialPromo": "Promo Spesial",
+  "@specialPromo": {
+    "description": "Judul bagian untuk promosi spesial"
+  }
+}

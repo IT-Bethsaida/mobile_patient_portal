@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
+import 'package:patient_portal/gen_l10n/app_localizations.dart';
 
 class HomePageContent extends StatefulWidget {
   const HomePageContent({super.key});
@@ -62,52 +63,69 @@ class _HomePageContentState extends State<HomePageContent> {
     },
   ];
 
-  final List<Map<String, dynamic>> menuItems = [
-    {
-      'icon': Icons.local_hospital,
-      'label': 'Hospitals\nInformation',
-      'color': AppColors.primary,
-    },
-    {
-      'icon': Icons.history,
-      'label': 'Outpatient\nHistory',
-      'color': AppColors.primary,
-    },
-    {'icon': Icons.science, 'label': 'Laboratory', 'color': AppColors.primary},
-    {
-      'icon': Icons.medical_services,
-      'label': 'Radiology',
-      'color': AppColors.primary,
-    },
-    {
-      'icon': Icons.assignment,
-      'label': 'Self Test',
-      'color': AppColors.primary,
-    },
-    {
-      'icon': Icons.payment,
-      'label': 'Self Payment',
-      'color': AppColors.grey400,
-      'disabled': true,
-    },
-    {
-      'icon': Icons.help,
-      'label': 'Quiz',
-      'color': AppColors.grey400,
-      'disabled': true,
-    },
-    {
-      'icon': Icons.login,
-      'label': 'Self Checkin',
-      'color': AppColors.grey400,
-      'disabled': true,
-    },
-  ];
+  List<Map<String, dynamic>> _getMenuItems(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      {
+        'icon': Icons.local_hospital,
+        'label': l10n.hospitalsInformation,
+        'labelKey': 'hospitalsInformation',
+        'color': AppColors.primary,
+      },
+      {
+        'icon': Icons.history,
+        'label': l10n.outpatientHistory,
+        'labelKey': 'outpatientHistory',
+        'color': AppColors.primary,
+      },
+      {
+        'icon': Icons.science,
+        'label': l10n.laboratory,
+        'labelKey': 'laboratory',
+        'color': AppColors.primary,
+      },
+      {
+        'icon': Icons.medical_services,
+        'label': l10n.radiology,
+        'labelKey': 'radiology',
+        'color': AppColors.primary,
+      },
+      {
+        'icon': Icons.assignment,
+        'label': l10n.selfTest,
+        'labelKey': 'selfTest',
+        'color': AppColors.primary,
+      },
+      {
+        'icon': Icons.payment,
+        'label': l10n.selfPayment,
+        'labelKey': 'selfPayment',
+        'color': AppColors.grey400,
+        'disabled': true,
+      },
+      {
+        'icon': Icons.help,
+        'label': l10n.quiz,
+        'labelKey': 'quiz',
+        'color': AppColors.grey400,
+        'disabled': true,
+      },
+      {
+        'icon': Icons.login,
+        'label': l10n.selfCheckin,
+        'labelKey': 'selfCheckin',
+        'color': AppColors.grey400,
+        'disabled': true,
+      },
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+    final menuItems = _getMenuItems(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -258,13 +276,14 @@ class _HomePageContentState extends State<HomePageContent> {
                     onTap: isDisabled
                         ? null
                         : () {
-                            // Navigate based on menu item
-                            if (item['label'] == 'Hospitals\nInformation') {
+                            // Navigate based on menu item labelKey
+                            final labelKey = item['labelKey'] as String?;
+                            if (labelKey == 'hospitalsInformation') {
                               Navigator.pushNamed(
                                 context,
                                 '/hospital-information',
                               );
-                            } else if (item['label'] == 'Outpatient\nHistory') {
+                            } else if (labelKey == 'outpatientHistory') {
                               Navigator.pushNamed(
                                 context,
                                 '/outpatient-history',
@@ -307,7 +326,7 @@ class _HomePageContentState extends State<HomePageContent> {
                           Padding(
                             padding: const EdgeInsets.only(top: 4),
                             child: Text(
-                              'coming soon',
+                              l10n.comingSoon,
                               textAlign: TextAlign.center,
                               style: AppTypography.labelSmall.copyWith(
                                 color: AppColors.grey400,
@@ -336,7 +355,7 @@ class _HomePageContentState extends State<HomePageContent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Our Doctors',
+                        l10n.ourDoctors,
                         style: AppTypography.titleLarge.copyWith(
                           color: isDarkMode
                               ? AppColors.white
@@ -346,7 +365,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          'See All',
+                          l10n.seeAll,
                           style: AppTypography.bodyMedium.copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w600,
@@ -475,7 +494,7 @@ class _HomePageContentState extends State<HomePageContent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Special Promo',
+                        l10n.specialPromo,
                         style: AppTypography.titleLarge.copyWith(
                           color: isDarkMode
                               ? AppColors.white
@@ -485,7 +504,7 @@ class _HomePageContentState extends State<HomePageContent> {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          'See All',
+                          l10n.seeAll,
                           style: AppTypography.bodyMedium.copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w600,
@@ -583,7 +602,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      'Valid until ${promo['validUntil'] as String? ?? ''}',
+                                      '${l10n.validUntil} ${promo['validUntil'] as String? ?? ''}',
                                       style: AppTypography.bodySmall.copyWith(
                                         color: AppColors.white.withValues(
                                           alpha: 0.8,

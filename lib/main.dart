@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:patient_portal/core/app_theme.dart';
 import 'package:patient_portal/core/theme_provider.dart';
+import 'package:patient_portal/core/localization_provider.dart';
+import 'package:patient_portal/gen_l10n/app_localizations.dart';
 import 'package:patient_portal/screens/splash_page.dart';
 import 'package:patient_portal/screens/login_page.dart';
 import 'package:patient_portal/screens/register_page.dart';
 import 'package:patient_portal/screens/otp_verification_page.dart';
 import 'package:patient_portal/screens/outpatient_history_page.dart';
 import 'package:patient_portal/screens/hospital_information_page.dart';
+import 'package:patient_portal/screens/settings_page.dart';
 import 'package:patient_portal/widgets/main_wrapper.dart';
 
 void main() {
@@ -19,10 +23,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => LocalizationProvider()),
+      ],
+      child: Consumer2<ThemeProvider, LocalizationProvider>(
+        builder: (context, themeProvider, localizationProvider, child) {
           return MaterialApp(
             title: 'Bethsaida Hospital',
             debugShowCheckedModeBanner: false,
@@ -31,6 +38,17 @@ class MyApp extends StatelessWidget {
             themeMode: themeProvider.isDarkMode
                 ? ThemeMode.dark
                 : ThemeMode.light,
+            locale: localizationProvider.locale,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('id'), // Indonesian
+              Locale('en'), // English
+            ],
             routes: {
               '/': (context) => const SplashPage(),
               '/login': (context) => const LoginPage(),
@@ -40,6 +58,7 @@ class MyApp extends StatelessWidget {
               '/hospital-information': (context) =>
                   const HospitalInformationPage(),
               '/outpatient-history': (context) => const OutpatientHistoryPage(),
+              '/settings': (context) => const SettingsPage(),
             },
           );
         },

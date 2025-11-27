@@ -1,0 +1,115 @@
+{
+  "@@locale": "en",
+  "appName": "Bethsaida Hospital",
+  "@appName": {
+    "description": "Full application name"
+  },
+  "shortAppName": "Bethsaida",
+  "@shortAppName": {
+    "description": "Short application name"
+  },
+  "tagline": "Hospital with Heart",
+  "@tagline": {
+    "description": "Main application slogan"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading indicator text"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Generic error message"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Generic success message"
+  },
+  "comingSoon": "coming soon",
+  "@comingSoon": {
+    "description": "Text for features that are coming soon"
+  },
+  "seeAll": "See All",
+  "@seeAll": {
+    "description": "Button text to see all items"
+  },
+  "validUntil": "Valid until",
+  "@validUntil": {
+    "description": "Text prefix for promo validity date"
+  },
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "Label for phone number input field"
+  },
+  "phoneNumberHint": "Example: 08123456789",
+  "@phoneNumberHint": {
+    "description": "Hint text for phone number input"
+  },
+  "sendOTP": "Send OTP",
+  "@sendOTP": {
+    "description": "Button text to send OTP"
+  },
+  "otpInfo": "We will send an OTP code to your phone number",
+  "@otpInfo": {
+    "description": "Information text about OTP sending"
+  },
+  "orContinueWith": "Or continue with",
+  "@orContinueWith": {
+    "description": "Divider text for alternative login methods"
+  },
+  "signInWithGoogle": "Sign in with Google",
+  "@signInWithGoogle": {
+    "description": "Google sign in button text"
+  },
+  "noAccount": "Don't have an account?",
+  "@noAccount": {
+    "description": "Text for users who don't have an account"
+  },
+  "register": "Sign Up",
+  "@register": {
+    "description": "Button text to register a new account"
+  },
+  "enterValidPhoneNumber": "Enter a valid phone number",
+  "@enterValidPhoneNumber": {
+    "description": "Error message for invalid phone number"
+  },
+  "hospitalsInformation": "Hospitals\nInformation",
+  "@hospitalsInformation": {
+    "description": "Menu item for hospitals information"
+  },
+  "outpatientHistory": "Outpatient\nHistory",
+  "@outpatientHistory": {
+    "description": "Menu item for outpatient history"
+  },
+  "laboratory": "Laboratory",
+  "@laboratory": {
+    "description": "Menu item for laboratory"
+  },
+  "radiology": "Radiology",
+  "@radiology": {
+    "description": "Menu item for radiology"
+  },
+  "selfTest": "Self Test",
+  "@selfTest": {
+    "description": "Menu item for self test"
+  },
+  "selfPayment": "Self Payment",
+  "@selfPayment": {
+    "description": "Menu item for self payment"
+  },
+  "quiz": "Quiz",
+  "@quiz": {
+    "description": "Menu item for quiz"
+  },
+  "selfCheckin": "Self Checkin",
+  "@selfCheckin": {
+    "description": "Menu item for self checkin"
+  },
+  "ourDoctors": "Our Doctors",
+  "@ourDoctors": {
+    "description": "Section title for doctors list"
+  },
+  "specialPromo": "Special Promo",
+  "@specialPromo": {
+    "description": "Section title for special promotions"
+  }
+}

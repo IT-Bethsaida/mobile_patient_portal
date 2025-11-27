@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
+import 'package:patient_portal/gen_l10n/app_localizations.dart';
 import 'package:patient_portal/components/social_login_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,11 +24,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _handlePhoneLogin() {
+    final l10n = AppLocalizations.of(context)!;
     // Validate phone number
     if (_phoneController.text.isEmpty || _phoneController.text.length < 10) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Masukkan nomor telepon yang valid'),
+        SnackBar(
+          content: Text(l10n.enterValidPhoneNumber),
           backgroundColor: Colors.red,
         ),
       );
@@ -75,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -112,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                       Column(
                         children: [
                           Text(
-                            'BETHSAIDA',
+                            l10n.shortAppName.toUpperCase(),
                             style: AppTypography.headlineLarge.copyWith(
                               color: isDarkMode
                                   ? AppColors.white
@@ -122,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           Text(
-                            'Hospital with Heart',
+                            l10n.tagline,
                             style: AppTypography.bodyMedium.copyWith(
                               color: isDarkMode
                                   ? AppColors.white
@@ -142,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // Phone Number Field
                 Text(
-                  'Nomor Telepon',
+                  l10n.phoneNumber,
                   style: AppTypography.titleMedium.copyWith(
                     color: isDarkMode ? AppColors.white : AppColors.textPrimary,
                   ),
@@ -168,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                           : AppColors.textPrimary,
                     ),
                     decoration: InputDecoration(
-                      hintText: 'Contoh: 08123456789',
+                      hintText: l10n.phoneNumberHint,
                       hintStyle: TextStyle(
                         color: isDarkMode
                             ? AppColors.grey500
@@ -199,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // Info Text
                 Text(
-                  'Kami akan mengirimkan kode OTP ke nomor telepon Anda',
+                  l10n.otpInfo,
                   style: AppTypography.bodySmall.copyWith(
                     color: isDarkMode
                         ? AppColors.grey300
@@ -245,7 +248,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           )
-                        : Text('Kirim OTP', style: AppTypography.button),
+                        : Text(l10n.sendOTP, style: AppTypography.button),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -264,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        'Atau lanjutkan dengan',
+                        l10n.orContinueWith,
                         style: AppTypography.bodySmall.copyWith(
                           color: isDarkMode
                               ? AppColors.grey300
@@ -286,7 +289,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // Google Login Button
                 SocialLoginButton(
-                  label: 'Sign in with Google',
+                  label: l10n.signInWithGoogle,
                   imageIcon: const AssetImage('assets/icon_google.png'),
                   backgroundColor: isDarkMode
                       ? AppColors.grey800
@@ -303,7 +306,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Belum punya akun? ",
+                      "${l10n.noAccount} ",
                       style: AppTypography.bodySmall.copyWith(
                         color: isDarkMode
                             ? AppColors.grey300
@@ -321,7 +324,7 @@ class _LoginPageState extends State<LoginPage> {
                         overlayColor: Colors.transparent,
                       ),
                       child: Text(
-                        'Daftar',
+                        l10n.register,
                         style: AppTypography.bodySmall.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.w600,
