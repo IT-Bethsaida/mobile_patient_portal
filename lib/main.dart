@@ -18,6 +18,12 @@ import 'package:patient_portal/screens/search_doctor_page.dart';
 import 'package:patient_portal/screens/specialists_page.dart';
 import 'package:patient_portal/screens/emergency_page.dart';
 import 'package:patient_portal/screens/premium_services_page.dart';
+import 'package:patient_portal/screens/all_doctors_page.dart';
+import 'package:patient_portal/screens/all_promos_page.dart';
+import 'package:patient_portal/screens/radiology_results_page.dart';
+import 'package:patient_portal/screens/lab_results_page.dart';
+import 'package:patient_portal/screens/medications_page.dart';
+import 'package:patient_portal/screens/notifications_page.dart';
 import 'package:patient_portal/widgets/main_wrapper.dart';
 
 void main() {
@@ -38,7 +44,7 @@ class MyApp extends StatelessWidget {
         builder: (context, themeProvider, localizationProvider, child) {
           return MaterialApp(
             title: 'Bethsaida Hospital',
-            debugShowCheckedModeBanner: false,
+            debugShowCheckedModeBanner: true,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: themeProvider.isDarkMode
@@ -74,6 +80,12 @@ class MyApp extends StatelessWidget {
               '/specialists': (context) => const SpecialistsPage(),
               '/emergency': (context) => const EmergencyPage(),
               '/premium-services': (context) => const PremiumServicesPage(),
+              '/all-doctors': (context) => AllDoctorsPage(),
+              '/all-promos': (context) => const AllPromosPage(),
+              '/radiology-results': (context) => const RadiologyResultsPage(),
+              '/lab-results': (context) => const LabResultsPage(),
+              '/medications': (context) => const MedicationsPage(),
+              '/notifications': (context) => const NotificationsPage(),
             },
           );
         },

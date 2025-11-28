@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
+import 'package:pinput/pinput.dart';
 
 class OtpVerificationPage extends StatefulWidget {
   const OtpVerificationPage({super.key});
@@ -12,11 +13,7 @@ class OtpVerificationPage extends StatefulWidget {
 }
 
 class _OtpVerificationPageState extends State<OtpVerificationPage> {
-  final List<TextEditingController> _otpControllers = List.generate(
-    6,
-    (index) => TextEditingController(),
-  );
-  final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
+  final pinController = TextEditingController();
 
   bool _isVerifying = false;
   bool _isResending = false;
@@ -38,12 +35,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
 
   @override
   void dispose() {
-    for (var controller in _otpControllers) {
-      controller.dispose();
-    }
-    for (var focusNode in _focusNodes) {
-      focusNode.dispose();
-    }
+    pinController.dispose();
     super.dispose();
   }
 
@@ -58,36 +50,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     });
   }
 
-  void _handleOtpInput(String value, int index) {
-    if (value.isNotEmpty) {
-      // Only keep the last entered digit
-      if (value.length > 1) {
-        _otpControllers[index].text = value.substring(value.length - 1);
-        _otpControllers[index].selection = TextSelection.fromPosition(
-          TextPosition(offset: _otpControllers[index].text.length),
-        );
-      }
-
-      // Move to next field
-      if (index < 5) {
-        _focusNodes[index + 1].requestFocus();
-      } else {
-        // Last field, remove focus and verify
-        _focusNodes[index].unfocus();
-        _verifyOtp();
-      }
-    }
-  }
-
-  void _handleKeyEvent(String value, int index) {
-    if (value.isEmpty && index > 0) {
-      // Handle backspace - move to previous field
-      _focusNodes[index - 1].requestFocus();
-    }
-  }
-
   void _verifyOtp() {
-    String otp = _otpControllers.map((controller) => controller.text).join();
+    String otp = pinController.text;
 
     if (otp.length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -252,73 +216,86 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                 const SizedBox(height: 48),
 
                 // OTP Input Fields
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(6, (index) {
-                    return Container(
-                      width: 45,
-                      height: 58,
-                      margin: const EdgeInsets.symmetric(horizontal: 2),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: _otpControllers[index].text.isNotEmpty
-                              ? AppColors.primary
-                              : isDarkMode
-                              ? AppColors.grey600
-                              : AppColors.grey300,
-                          width: _otpControllers[index].text.isNotEmpty ? 2 : 1,
-                        ),
-                        color: isDarkMode ? AppColors.grey800 : AppColors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                            blurRadius: 6,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
+                Pinput(
+                  length: 6,
+                  controller: pinController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  defaultPinTheme: PinTheme(
+                    width: 56,
+                    height: 56,
+                    textStyle: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: isDarkMode
+                          ? AppColors.white
+                          : AppColors.textPrimary,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isDarkMode ? AppColors.grey800 : AppColors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isDarkMode
+                            ? AppColors.grey600
+                            : AppColors.grey300,
+                        width: 1.5,
                       ),
-                      child: Center(
-                        child: TextField(
-                          controller: _otpControllers[index],
-                          focusNode: _focusNodes[index],
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          autofocus: index == 0,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: isDarkMode
-                                ? AppColors.white
-                                : AppColors.textPrimary,
-                            letterSpacing: 0.5,
-                          ),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            LengthLimitingTextInputFormatter(1),
-                          ],
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            counterText: '',
-                            contentPadding: EdgeInsets.all(0),
-                          ),
-                          onChanged: (value) {
-                            _handleOtpInput(value, index);
-                            _handleKeyEvent(value, index);
-                          },
-                          onTap: () {
-                            _otpControllers[index].selection =
-                                TextSelection.fromPosition(
-                                  TextPosition(
-                                    offset: _otpControllers[index].text.length,
-                                  ),
-                                );
-                          },
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.1),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
                         ),
-                      ),
-                    );
-                  }),
+                      ],
+                    ),
+                  ),
+                  focusedPinTheme: PinTheme(
+                    width: 56,
+                    height: 56,
+                    textStyle: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: isDarkMode
+                          ? AppColors.white
+                          : AppColors.textPrimary,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isDarkMode ? AppColors.grey800 : AppColors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppColors.primary, width: 2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                  ),
+                  submittedPinTheme: PinTheme(
+                    width: 56,
+                    height: 56,
+                    textStyle: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: isDarkMode
+                          ? AppColors.white
+                          : AppColors.textPrimary,
+                    ),
+                    decoration: BoxDecoration(
+                      color: isDarkMode ? AppColors.grey800 : AppColors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppColors.primary, width: 2),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.1),
+                          blurRadius: 6,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                  ),
+                  onCompleted: (pin) => _verifyOtp(),
                 ),
 
                 const SizedBox(height: 32),

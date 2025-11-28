@@ -33,158 +33,106 @@ class MedicalRecordPageContent extends StatelessWidget {
                 : [AppColors.grey100, AppColors.white],
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Medical record icon
-              Container(
+        child: Column(
+          children: [
+            // Medical Records List
+            Expanded(
+              child: ListView(
                 padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Icon(
-                  Icons.medical_information_outlined,
-                  size: 80,
-                  color: AppColors.primary,
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              Text(
-                'Medical Record',
-                style: AppTypography.headlineMedium.copyWith(
-                  color: isDarkMode ? AppColors.white : AppColors.textPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.warning.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: AppColors.warning.withValues(alpha: 0.3),
-                    width: 1,
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.construction,
-                      size: 16,
-                      color: AppColors.warning,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Under Development',
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.warning,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Text(
-                  'Fitur Medical Record sedang dalam tahap pengembangan dan akan segera tersedia untuk Anda.',
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: isDarkMode
-                        ? AppColors.grey300
-                        : AppColors.textSecondary,
-                    height: 1.5,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Coming soon features
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 24),
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: isDarkMode ? AppColors.grey800 : AppColors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.black.withValues(alpha: 0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Fitur yang akan datang:',
-                      style: AppTypography.titleMedium.copyWith(
-                        color: isDarkMode
-                            ? AppColors.white
-                            : AppColors.textPrimary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    _buildFeatureItem(
-                      'Riwayat Pemeriksaan',
-                      Icons.history,
+                children: [
+                  GestureDetector(
+                    onTap: () =>
+                        Navigator.pushNamed(context, '/radiology-results'),
+                    child: _buildMedicalRecordCard(
+                      'Hasil Radiologi',
+                      'Lihat hasil pemeriksaan radiologi seperti X-ray, CT scan, dan MRI',
+                      Icons.biotech,
                       isDarkMode,
                     ),
-                    _buildFeatureItem(
-                      'Hasil Lab & Radiologi',
+                  ),
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/lab-results'),
+                    child: _buildMedicalRecordCard(
+                      'Hasil Laboratorium',
+                      'Akses hasil pemeriksaan darah, urine, dan tes laboratorium lainnya',
                       Icons.science,
                       isDarkMode,
                     ),
-                    _buildFeatureItem(
-                      'Resep & Obat',
+                  ),
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, '/medications'),
+                    child: _buildMedicalRecordCard(
+                      'Obat Anda',
+                      'Daftar resep obat dan informasi penggunaan yang direkomendasikan',
                       Icons.medication,
                       isDarkMode,
                     ),
-                    _buildFeatureItem(
-                      'Jadwal Kontrol',
-                      Icons.schedule,
-                      isDarkMode,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildFeatureItem(String title, IconData icon, bool isDarkMode) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+  Widget _buildMedicalRecordCard(
+    String title,
+    String description,
+    IconData icon,
+    bool isDarkMode,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: isDarkMode ? AppColors.grey800 : AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.black.withValues(alpha: 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: AppColors.primary),
-          const SizedBox(width: 12),
-          Text(
-            title,
-            style: AppTypography.bodyMedium.copyWith(
-              color: isDarkMode ? AppColors.grey200 : AppColors.textPrimary,
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, size: 30, color: AppColors.primary),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTypography.titleMedium.copyWith(
+                    color: isDarkMode ? AppColors.white : AppColors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: AppTypography.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                    height: 1.4,
+                  ),
+                ),
+              ],
             ),
           ),
+          Icon(Icons.chevron_right, color: AppColors.grey400, size: 24),
         ],
       ),
     );

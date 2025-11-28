@@ -60,7 +60,7 @@ class SocialLoginButton extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: isOutline
             ? []
             : [
@@ -73,13 +73,13 @@ class SocialLoginButton extends StatelessWidget {
       ),
       child: Material(
         color: isOutline ? Colors.transparent : backgroundColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         child: InkWell(
           onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(24),
           child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(24),
               border: isOutline
                   ? Border.all(color: borderColor, width: 1.5)
                   : null,

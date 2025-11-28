@@ -4,6 +4,7 @@ import 'package:patient_portal/widgets/home_page_content.dart';
 import 'package:patient_portal/widgets/appointment_page_content.dart';
 import 'package:patient_portal/widgets/medical_record_page_content.dart';
 import 'package:patient_portal/widgets/profile_page_content.dart';
+import 'package:patient_portal/core/app_typography.dart';
 
 class MainWrapper extends StatefulWidget {
   final int initialIndex;
@@ -16,74 +17,155 @@ class MainWrapper extends StatefulWidget {
 
 class _MainWrapperState extends State<MainWrapper> {
   late int _currentIndex;
-  late PageController _pageController;
+  int _previousIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
-    _pageController = PageController(initialPage: widget.initialIndex);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+    _previousIndex = widget.initialIndex;
   }
 
   void _onTabTapped(int index) {
+    if (index == _currentIndex) return;
     setState(() {
+      _previousIndex = _currentIndex;
       _currentIndex = index;
     });
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.ease,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-
     // Pages for each tab
     final List<Widget> pages = [
-      const HomePageContent(), // Home content without bottom nav
-      const AppointmentPageContent(), // Appointment page
-      const MedicalRecordPageContent(), // Medical Record page
-      const ProfilePageContent(), // Profile page
+      const HomePageContent(),
+      const AppointmentPageContent(),
+      const MedicalRecordPageContent(),
+      const ProfilePageContent(),
     ];
 
+    final direction = _currentIndex >= _previousIndex ? 1.0 : -1.0;
+
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 260),
+        switchInCurve: Curves.easeOutCubic,
+        switchOutCurve: Curves.easeInCubic,
+        transitionBuilder: (child, animation) {
+          final offsetAnimation = Tween<Offset>(
+            begin: Offset(0.08 * direction, 0),
+            end: Offset.zero,
+          ).chain(CurveTween(curve: Curves.easeOutCubic)).animate(animation);
+
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(position: offsetAnimation, child: child),
+          );
         },
-        children: pages,
+        child: KeyedSubtree(
+          key: ValueKey<int>(_currentIndex),
+          child: pages[_currentIndex],
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: _PillBottomNav(
         currentIndex: _currentIndex,
         onTap: _onTabTapped,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: isDarkMode ? AppColors.grey900 : AppColors.white,
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: AppColors.grey400,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_month),
-            label: 'Appointment',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.medical_information),
-            label: 'Medical Record',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
+      ),
+    );
+  }
+}
+
+class _PillBottomNav extends StatelessWidget {
+  const _PillBottomNav({required this.currentIndex, required this.onTap});
+
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    const Color highlightColor = AppColors.primary;
+    final items = [
+      {'icon': Icons.home_outlined, 'label': 'Home'},
+      {'icon': Icons.calendar_month_outlined, 'label': 'Appointment'},
+      {'icon': Icons.medical_information_outlined, 'label': 'Medical Record'},
+      {'icon': Icons.person_outline, 'label': 'Profile'},
+    ];
+
+    final safeBottom = MediaQuery.of(context).padding.bottom;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 10),
+      child: Container(
+        height: 76 + safeBottom,
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 14,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.only(
+          left: 8,
+          right: 8,
+          bottom: 10 + safeBottom,
+          top: 8,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: List.generate(items.length, (index) {
+            final item = items[index];
+            final selected = index == currentIndex;
+
+            return Expanded(
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => onTap(index),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 220),
+                  curve: Curves.easeOut,
+                  height: 56,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: selected ? highlightColor : Colors.transparent,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        item['icon'] as IconData,
+                        size: 20,
+                        color: selected
+                            ? AppColors.white
+                            : AppColors.primaryDark.withValues(alpha: 0.7),
+                      ),
+                      const SizedBox(height: 4),
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          item['label'] as String,
+                          style: AppTypography.labelMedium.copyWith(
+                            color: selected
+                                ? AppColors.white
+                                : AppColors.textPrimary.withValues(alpha: 0.7),
+                            fontWeight: FontWeight.w600,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.visible,
+                          softWrap: false,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }
@@ -120,7 +202,7 @@ class PlaceholderPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Is going Development',
+              'Is under Development',
               style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
             ),
           ],

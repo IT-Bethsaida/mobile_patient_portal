@@ -12,13 +12,6 @@ class ProfilePageContent extends StatelessWidget {
         MediaQuery.of(context).platformBrightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
           bottom:
@@ -29,70 +22,116 @@ class ProfilePageContent extends StatelessWidget {
         child: Column(
           children: [
             // Profile Header
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(24),
-                  bottomRight: Radius.circular(24),
-                ),
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(24),
+                bottomRight: Radius.circular(24),
               ),
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
-              child: Column(
-                children: [
-                  // Avatar
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.white,
-                      border: Border.all(color: AppColors.white, width: 4),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [AppColors.primaryDark, AppColors.primary],
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: -60,
+                      right: -90,
+                      child: Container(
+                        width: 260,
+                        height: 260,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryLight.withValues(alpha: 0.25),
+                          borderRadius: BorderRadius.circular(130),
                         ),
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.person,
-                      size: 60,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Name
-                  Text(
-                    'ADIFA KHOIRUNNISA',
-                    style: AppTypography.headlineSmall.copyWith(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  // MR Number
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      'MR No: 00-00-41-35',
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                ],
+                    Positioned(
+                      bottom: -40,
+                      right: 10,
+                      child: Container(
+                        width: 170,
+                        height: 170,
+                        decoration: BoxDecoration(
+                          color: AppColors.white.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(85),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Avatar
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.white,
+                              border: Border.all(
+                                color: AppColors.white,
+                                width: 4,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Icon(
+                              Icons.person,
+                              size: 60,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          // Name
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              'ADIFA KHOIRUNNISA',
+                              style: AppTypography.headlineSmall.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          // MR Number
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.white.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              'MR No: 00-00-41-35',
+                              style: AppTypography.bodyMedium.copyWith(
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 

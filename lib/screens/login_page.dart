@@ -93,248 +93,338 @@ class _LoginPageState extends State<LoginPage> {
                   : [AppColors.primaryLight, Colors.white],
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppTheme.screenPaddingHorizontal,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Logo Section
-                Center(
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/logo_only.png',
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.contain,
-                      ),
-                      const SizedBox(height: 24),
-                      Column(
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned(
+                top: 600,
+                right: -50,
+                child: Container(
+                  width: 280,
+                  height: 280,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(140),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 20,
+                right: 350,
+                child: Container(
+                  width: 220,
+                  height: 220,
+                  decoration: BoxDecoration(
+                    color: AppColors.white.withValues(alpha: 0.6),
+                    borderRadius: BorderRadius.circular(110),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: -100,
+                right: 280,
+                child: Container(
+                  width: 300,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryDark.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(200),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: -40,
+                right: -60,
+                child: Container(
+                  width: 180,
+                  height: 180,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(90),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 550,
+                right: -40,
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 120,
+                right: 330,
+                child: Container(
+                  width: 160,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(80),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.screenPaddingHorizontal,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Logo Section
+                    Center(
+                      child: Column(
                         children: [
-                          Text(
-                            l10n.shortAppName.toUpperCase(),
-                            style: AppTypography.headlineLarge.copyWith(
-                              color: isDarkMode
-                                  ? AppColors.white
-                                  : AppColors.primary,
-                              fontFamily: 'GillSansCondensedBold',
-                              fontSize: 45,
-                            ),
+                          Image.asset(
+                            'assets/images/logo_only.png',
+                            width: 150,
+                            height: 150,
+                            fit: BoxFit.contain,
                           ),
-                          Text(
-                            l10n.tagline,
-                            style: AppTypography.bodyMedium.copyWith(
-                              color: isDarkMode
-                                  ? AppColors.white
-                                  : AppColors.primary,
-                              fontFamily: 'BrushScript',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              height: 0.1,
-                            ),
+                          const SizedBox(height: 24),
+                          Column(
+                            children: [
+                              Text(
+                                l10n.shortAppName.toUpperCase(),
+                                style: AppTypography.headlineLarge.copyWith(
+                                  color: isDarkMode
+                                      ? AppColors.white
+                                      : AppColors.primary,
+                                  fontFamily: 'GillSansCondensedBold',
+                                  fontSize: 45,
+                                ),
+                              ),
+                              Text(
+                                l10n.tagline,
+                                style: AppTypography.bodyMedium.copyWith(
+                                  color: isDarkMode
+                                      ? AppColors.white
+                                      : AppColors.primary,
+                                  fontFamily: 'BrushScript',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                  height: 0.1,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 48),
-
-                // Phone Number Field
-                Text(
-                  l10n.phoneNumber,
-                  style: AppTypography.titleMedium.copyWith(
-                    color: isDarkMode ? AppColors.white : AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: TextField(
-                    controller: _phoneController,
-                    keyboardType: TextInputType.phone,
-                    style: TextStyle(
-                      color: isDarkMode
-                          ? AppColors.white
-                          : AppColors.textPrimary,
                     ),
-                    decoration: InputDecoration(
-                      hintText: l10n.phoneNumberHint,
-                      hintStyle: TextStyle(
-                        color: isDarkMode
-                            ? AppColors.grey500
-                            : AppColors.grey400,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.phone_outlined,
-                        color: isDarkMode
-                            ? AppColors.grey400
-                            : AppColors.grey600,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: isDarkMode
-                          ? AppColors.grey800
-                          : AppColors.white,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
+                    const SizedBox(height: 48),
 
-                // Info Text
-                Text(
-                  l10n.otpInfo,
-                  style: AppTypography.bodySmall.copyWith(
-                    color: isDarkMode
-                        ? AppColors.grey300
-                        : AppColors.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-
-                // Login Button
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ElevatedButton(
-                    onPressed: _isLoading ? null : _handlePhoneLogin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 14,
-                        horizontal: 20,
-                      ),
-                      minimumSize: const Size(double.infinity, 52),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            height: 24,
-                            width: 24,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                AppColors.white,
-                              ),
-                            ),
-                          )
-                        : Text(l10n.sendOTP, style: AppTypography.button),
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Divider with text
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: isDarkMode
-                            ? AppColors.grey600
-                            : AppColors.grey400,
-                        thickness: 1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Text(
-                        l10n.orContinueWith,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: isDarkMode
-                              ? AppColors.grey300
-                              : AppColors.textSecondary,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: isDarkMode
-                            ? AppColors.grey600
-                            : AppColors.grey400,
-                        thickness: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // Google Login Button
-                SocialLoginButton(
-                  label: l10n.signInWithGoogle,
-                  imageIcon: const AssetImage('assets/icon_google.png'),
-                  backgroundColor: isDarkMode
-                      ? AppColors.grey800
-                      : Colors.white,
-                  borderColor: isDarkMode ? AppColors.grey600 : AppColors.black,
-                  isLoading: _isGoogleLoading,
-                  isOutline: true,
-                  onPressed: _handleGoogleLogin,
-                ),
-                const SizedBox(height: 16),
-
-                // Sign Up Link
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                    // Phone Number Field
                     Text(
-                      "${l10n.noAccount} ",
-                      style: AppTypography.bodySmall.copyWith(
+                      l10n.phoneNumber,
+                      style: AppTypography.titleMedium.copyWith(
                         color: isDarkMode
-                            ? AppColors.grey300
+                            ? AppColors.white
                             : AppColors.textPrimary,
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/register');
-                      },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        overlayColor: Colors.transparent,
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _phoneController,
+                      keyboardType: TextInputType.phone,
+                      style: TextStyle(
+                        color: isDarkMode
+                            ? AppColors.white
+                            : AppColors.textPrimary,
                       ),
-                      child: Text(
-                        l10n.register,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
+                      decoration: InputDecoration(
+                        hintText: l10n.phoneNumberHint,
+                        hintStyle: TextStyle(
+                          color: isDarkMode
+                              ? AppColors.grey500
+                              : AppColors.grey400,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.phone_outlined,
+                          color: isDarkMode
+                              ? AppColors.grey400
+                              : AppColors.grey600,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(28),
+                          borderSide: BorderSide(
+                            color: isDarkMode
+                                ? AppColors.grey600
+                                : AppColors.grey300,
+                            width: 1.5,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(28),
+                          borderSide: BorderSide(
+                            color: isDarkMode
+                                ? AppColors.grey600
+                                : AppColors.grey300,
+                            width: 1.5,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(28),
+                          borderSide: BorderSide(
+                            color: AppColors.primary,
+                            width: 2,
+                          ),
+                        ),
+                        filled: true,
+                        fillColor: isDarkMode
+                            ? AppColors.grey800
+                            : AppColors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 16,
                         ),
                       ),
                     ),
+                    const SizedBox(height: 16),
+
+                    // Info Text
+                    Text(
+                      l10n.otpInfo,
+                      style: AppTypography.bodySmall.copyWith(
+                        color: isDarkMode
+                            ? AppColors.grey300
+                            : AppColors.textSecondary,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Login Button
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primary.withValues(alpha: 0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton(
+                        onPressed: _isLoading ? null : _handlePhoneLogin,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 24,
+                          ),
+                          minimumSize: const Size(double.infinity, 56),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                        ),
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 24,
+                                width: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    AppColors.white,
+                                  ),
+                                ),
+                              )
+                            : Text(l10n.sendOTP, style: AppTypography.button),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Divider with text
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            color: isDarkMode
+                                ? AppColors.grey600
+                                : AppColors.grey400,
+                            thickness: 1,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Text(
+                            l10n.orContinueWith,
+                            style: AppTypography.bodySmall.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.grey300
+                                  : AppColors.textSecondary,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: isDarkMode
+                                ? AppColors.grey600
+                                : AppColors.grey400,
+                            thickness: 1,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Google Login Button
+                    SocialLoginButton(
+                      label: l10n.signInWithGoogle,
+                      imageIcon: const AssetImage('assets/icon_google.png'),
+                      backgroundColor: isDarkMode
+                          ? AppColors.grey800
+                          : Colors.white,
+                      borderColor: isDarkMode
+                          ? AppColors.grey600
+                          : AppColors.black,
+                      isLoading: _isGoogleLoading,
+                      isOutline: true,
+                      onPressed: _handleGoogleLogin,
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Sign Up Link
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${l10n.noAccount} ",
+                          style: AppTypography.bodySmall.copyWith(
+                            color: isDarkMode
+                                ? AppColors.grey300
+                                : AppColors.textPrimary,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/register');
+                          },
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            overlayColor: Colors.transparent,
+                          ),
+                          child: Text(
+                            l10n.register,
+                            style: AppTypography.bodySmall.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
