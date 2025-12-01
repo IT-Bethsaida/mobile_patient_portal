@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary Colors - Bethsaida Navy Blue
-  static const Color primaryDark = Color(0xFF1B3A6B); // Navy Blue
-  static const Color primary = Color(0xFF2E5090); // Medium Navy Blue
+  static const Color primaryDark = Color(0xFF00264F); // Darker Navy Blue
+  static const Color primary = Color(0xFF00386F); // Custom Navy Blue
   static const Color primaryLight = Color(0xFFE8F0F8); // Light Blue Background
 
   // Secondary Colors - Bethsaida Red

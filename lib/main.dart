@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:patient_portal/core/app_theme.dart';
@@ -27,6 +28,8 @@ import 'package:patient_portal/screens/notifications_page.dart';
 import 'package:patient_portal/widgets/main_wrapper.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
@@ -44,7 +47,7 @@ class MyApp extends StatelessWidget {
         builder: (context, themeProvider, localizationProvider, child) {
           return MaterialApp(
             title: 'Bethsaida Hospital',
-            debugShowCheckedModeBanner: true,
+            debugShowCheckedModeBanner: false,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: themeProvider.isDarkMode
