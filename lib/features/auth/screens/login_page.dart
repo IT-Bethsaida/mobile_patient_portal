@@ -3,7 +3,7 @@ import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
 import 'package:patient_portal/gen_l10n/app_localizations.dart';
-import 'package:patient_portal/components/social_login_button.dart';
+import 'package:patient_portal/features/auth/widgets/social_login_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

@@ -3,7 +3,7 @@ import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
 import 'package:patient_portal/gen_l10n/app_localizations.dart';
-import 'package:patient_portal/screens/promo_detail_page.dart';
+import 'package:patient_portal/features/promos/screens/promo_detail_page.dart';
 
 class AllPromosPage extends StatelessWidget {
   const AllPromosPage({super.key});

@@ -42,6 +42,8 @@ dependencies:
   intl: any
   url_launcher: ^6.2.3
   pinput: ^6.0.1
+  http: ^1.2.0
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +72,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - .env
 
   fonts:
     - family: BrushScript
