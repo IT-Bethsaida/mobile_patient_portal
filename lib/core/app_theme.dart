@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 import 'app_typography.dart';
 
@@ -103,22 +104,24 @@ class AppTheme {
       ),
 
       // Text Theme
-      textTheme: TextTheme(
-        displayLarge: AppTypography.displayLarge,
-        displayMedium: AppTypography.displayMedium,
-        displaySmall: AppTypography.displaySmall,
-        headlineLarge: AppTypography.headlineLarge,
-        headlineMedium: AppTypography.headlineMedium,
-        headlineSmall: AppTypography.headlineSmall,
-        titleLarge: AppTypography.titleLarge,
-        titleMedium: AppTypography.titleMedium,
-        titleSmall: AppTypography.titleSmall,
-        bodyLarge: AppTypography.bodyLarge,
-        bodyMedium: AppTypography.bodyMedium,
-        bodySmall: AppTypography.bodySmall,
-        labelLarge: AppTypography.labelLarge,
-        labelMedium: AppTypography.labelMedium,
-        labelSmall: AppTypography.labelSmall,
+      textTheme: GoogleFonts.montserratTextTheme(
+        TextTheme(
+          displayLarge: AppTypography.displayLarge,
+          displayMedium: AppTypography.displayMedium,
+          displaySmall: AppTypography.displaySmall,
+          headlineLarge: AppTypography.headlineLarge,
+          headlineMedium: AppTypography.headlineMedium,
+          headlineSmall: AppTypography.headlineSmall,
+          titleLarge: AppTypography.titleLarge,
+          titleMedium: AppTypography.titleMedium,
+          titleSmall: AppTypography.titleSmall,
+          bodyLarge: AppTypography.bodyLarge,
+          bodyMedium: AppTypography.bodyMedium,
+          bodySmall: AppTypography.bodySmall,
+          labelLarge: AppTypography.labelLarge,
+          labelMedium: AppTypography.labelMedium,
+          labelSmall: AppTypography.labelSmall,
+        ),
       ),
 
       // Scaffold Background
@@ -257,36 +260,46 @@ class AppTheme {
       ),
 
       // Text Theme
-      textTheme: TextTheme(
-        displayLarge: AppTypography.displayLarge.copyWith(
-          color: AppColors.white,
+      textTheme: GoogleFonts.montserratTextTheme(
+        TextTheme(
+          displayLarge: AppTypography.displayLarge.copyWith(
+            color: AppColors.white,
+          ),
+          displayMedium: AppTypography.displayMedium.copyWith(
+            color: AppColors.white,
+          ),
+          displaySmall: AppTypography.displaySmall.copyWith(
+            color: AppColors.white,
+          ),
+          headlineLarge: AppTypography.headlineLarge.copyWith(
+            color: AppColors.white,
+          ),
+          headlineMedium: AppTypography.headlineMedium.copyWith(
+            color: AppColors.white,
+          ),
+          headlineSmall: AppTypography.headlineSmall.copyWith(
+            color: AppColors.white,
+          ),
+          titleLarge: AppTypography.titleLarge.copyWith(color: AppColors.white),
+          titleMedium: AppTypography.titleMedium.copyWith(
+            color: AppColors.white,
+          ),
+          titleSmall: AppTypography.titleSmall.copyWith(color: AppColors.white),
+          bodyLarge: AppTypography.bodyLarge.copyWith(color: AppColors.grey100),
+          bodyMedium: AppTypography.bodyMedium.copyWith(
+            color: AppColors.grey100,
+          ),
+          bodySmall: AppTypography.bodySmall.copyWith(color: AppColors.grey300),
+          labelLarge: AppTypography.labelLarge.copyWith(
+            color: AppColors.grey100,
+          ),
+          labelMedium: AppTypography.labelMedium.copyWith(
+            color: AppColors.grey200,
+          ),
+          labelSmall: AppTypography.labelSmall.copyWith(
+            color: AppColors.grey400,
+          ),
         ),
-        displayMedium: AppTypography.displayMedium.copyWith(
-          color: AppColors.white,
-        ),
-        displaySmall: AppTypography.displaySmall.copyWith(
-          color: AppColors.white,
-        ),
-        headlineLarge: AppTypography.headlineLarge.copyWith(
-          color: AppColors.white,
-        ),
-        headlineMedium: AppTypography.headlineMedium.copyWith(
-          color: AppColors.white,
-        ),
-        headlineSmall: AppTypography.headlineSmall.copyWith(
-          color: AppColors.white,
-        ),
-        titleLarge: AppTypography.titleLarge.copyWith(color: AppColors.white),
-        titleMedium: AppTypography.titleMedium.copyWith(color: AppColors.white),
-        titleSmall: AppTypography.titleSmall.copyWith(color: AppColors.white),
-        bodyLarge: AppTypography.bodyLarge.copyWith(color: AppColors.grey100),
-        bodyMedium: AppTypography.bodyMedium.copyWith(color: AppColors.grey100),
-        bodySmall: AppTypography.bodySmall.copyWith(color: AppColors.grey300),
-        labelLarge: AppTypography.labelLarge.copyWith(color: AppColors.grey100),
-        labelMedium: AppTypography.labelMedium.copyWith(
-          color: AppColors.grey200,
-        ),
-        labelSmall: AppTypography.labelSmall.copyWith(color: AppColors.grey400),
       ),
 
       // Scaffold Background

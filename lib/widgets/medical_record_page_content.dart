@@ -42,6 +42,17 @@ class MedicalRecordPageContent extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () =>
+                        Navigator.pushNamed(context, '/outpatient-history'),
+                    child: _buildMedicalRecordCard(
+                      'Riwayat Kunjungan',
+                      'Lihat riwayat kunjungan rawat jalan dan konsultasi dokter',
+                      Icons.history,
+                      isDarkMode,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  GestureDetector(
+                    onTap: () =>
                         Navigator.pushNamed(context, '/radiology-results'),
                     child: _buildMedicalRecordCard(
                       'Hasil Radiologi',
