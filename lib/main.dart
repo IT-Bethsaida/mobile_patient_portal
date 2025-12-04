@@ -8,6 +8,7 @@ import 'package:patient_portal/core/theme_provider.dart';
 import 'package:patient_portal/core/localization_provider.dart';
 import 'package:patient_portal/core/config/env_config.dart';
 import 'package:patient_portal/gen_l10n/app_localizations.dart';
+import 'package:patient_portal/features/auth/providers/auth_provider.dart';
 import 'package:patient_portal/features/home/screens/splash_page.dart';
 import 'package:patient_portal/features/auth/screens/login_page.dart';
 import 'package:patient_portal/features/auth/screens/register_page.dart';
@@ -53,6 +54,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => LocalizationProvider()),
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider()..loadSavedAuth(),
+        ),
       ],
       child: Consumer2<ThemeProvider, LocalizationProvider>(
         builder: (context, themeProvider, localizationProvider, child) {

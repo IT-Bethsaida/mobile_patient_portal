@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
 import 'package:patient_portal/gen_l10n/app_localizations.dart';
 import 'package:patient_portal/features/auth/widgets/social_login_button.dart';
+import 'package:patient_portal/features/auth/providers/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,8 +16,19 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _phoneController = TextEditingController();
-  bool _isLoading = false;
   bool _isGoogleLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Check if user is already authenticated
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      if (authProvider.isAuthenticated) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -23,8 +36,10 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _handlePhoneLogin() {
+  Future<void> _handlePhoneLogin() async {
     final l10n = AppLocalizations.of(context)!;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     // Validate phone number
     if (_phoneController.text.isEmpty || _phoneController.text.length < 10) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -36,24 +51,27 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    setState(() {
-      _isLoading = true;
-    });
+    // Request OTP
+    final success = await authProvider.requestOtp(_phoneController.text);
 
-    // Simulate OTP sending process
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
+    if (mounted) {
+      if (success) {
         // Navigate to OTP verification page with phone number
         Navigator.pushNamed(
           context,
           '/otp-verification',
           arguments: _phoneController.text,
         );
+      } else {
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(authProvider.errorMessage ?? 'Failed to send OTP'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
-    });
+    }
   }
 
   void _handleGoogleLogin() {
@@ -78,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
+    final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -311,7 +330,9 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                       child: ElevatedButton(
-                        onPressed: _isLoading ? null : _handlePhoneLogin,
+                        onPressed: authProvider.isLoading
+                            ? null
+                            : _handlePhoneLogin,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           padding: const EdgeInsets.symmetric(
@@ -323,7 +344,7 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(24),
                           ),
                         ),
-                        child: _isLoading
+                        child: authProvider.isLoading
                             ? const SizedBox(
                                 height: 24,
                                 width: 24,

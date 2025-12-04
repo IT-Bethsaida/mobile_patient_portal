@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
+import 'package:patient_portal/features/auth/providers/auth_provider.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpVerificationPage extends StatefulWidget {
@@ -15,7 +17,6 @@ class OtpVerificationPage extends StatefulWidget {
 class _OtpVerificationPageState extends State<OtpVerificationPage> {
   final pinController = TextEditingController();
 
-  bool _isVerifying = false;
   bool _isResending = false;
   int _resendTimer = 60;
   late String _phoneNumber;
@@ -50,8 +51,9 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     });
   }
 
-  void _verifyOtp() {
+  Future<void> _verifyOtp() async {
     String otp = pinController.text;
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     if (otp.length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -63,47 +65,65 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
       return;
     }
 
-    setState(() {
-      _isVerifying = true;
-    });
+    // Verify OTP
+    final success = await authProvider.verifyOtp(
+      phoneNumber: _phoneNumber,
+      code: otp,
+    );
 
-    // Simulate OTP verification
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        setState(() {
-          _isVerifying = false;
-        });
-
-        // For demo purposes, accept any 6-digit code
+    if (mounted) {
+      if (success) {
+        // Navigate to home page
         Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(authProvider.errorMessage ?? 'Kode OTP salah'),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
-    });
+    }
   }
 
-  void _resendOtp() {
+  Future<void> _resendOtp() async {
     if (_resendTimer > 0) return;
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
     setState(() {
       _isResending = true;
       _resendTimer = 60;
     });
 
-    // Simulate resending OTP
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        setState(() {
-          _isResending = false;
-        });
-        _startResendTimer();
+    // Request OTP again
+    final success = await authProvider.requestOtp(_phoneNumber);
 
+    if (mounted) {
+      setState(() {
+        _isResending = false;
+      });
+
+      if (success) {
+        _startResendTimer();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Kode OTP telah dikirim ulang'),
             backgroundColor: AppColors.primary,
           ),
         );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              authProvider.errorMessage ?? 'Gagal mengirim ulang OTP',
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
       }
-    });
+    }
   }
 
   String _formatPhoneNumber(String phone) {
@@ -117,6 +137,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
   Widget build(BuildContext context) {
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -366,7 +387,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: _isVerifying ? null : _verifyOtp,
+                    onPressed: authProvider.isLoading ? null : _verifyOtp,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       padding: const EdgeInsets.symmetric(
@@ -378,7 +399,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                    child: _isVerifying
+                    child: authProvider.isLoading
                         ? const SizedBox(
                             height: 24,
                             width: 24,

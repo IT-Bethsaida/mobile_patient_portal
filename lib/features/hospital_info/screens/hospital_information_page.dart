@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
@@ -10,6 +11,7 @@ import 'package:patient_portal/features/hospital_info/widgets/hospital_card_shim
 import 'package:patient_portal/features/hospital_info/utils/url_launcher_utils.dart';
 import 'package:patient_portal/core/network/api_response.dart';
 import 'package:patient_portal/shared/widgets/state_widgets.dart';
+import 'package:patient_portal/features/auth/providers/auth_provider.dart';
 
 class HospitalInformationPage extends StatefulWidget {
   const HospitalInformationPage({super.key});
@@ -32,6 +34,35 @@ class _HospitalInformationPageState extends State<HospitalInformationPage> {
     setState(() {
       _hospitalsFuture = HospitalService.getHospitals();
     });
+  }
+
+  void _handleUnauthorized() {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Session Expired'),
+        content: const Text(
+          'Your session has expired. Please login again to continue.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () async {
+              await authProvider.logout();
+              if (mounted) {
+                Navigator.of(context).pop(); // Close dialog
+                Navigator.of(
+                  context,
+                ).pushNamedAndRemoveUntil('/login', (route) => false);
+              }
+            },
+            child: const Text('Login'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -76,6 +107,13 @@ class _HospitalInformationPageState extends State<HospitalInformationPage> {
 
           // API Error state
           if (!response.success || response.data == null) {
+            // Handle 401 Unauthorized - token expired
+            if (response.statusCode == 401) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _handleUnauthorized();
+              });
+            }
+
             return ApiErrorState(
               message: response.message ?? 'Failed to load hospitals',
               onRetry: _loadHospitals,

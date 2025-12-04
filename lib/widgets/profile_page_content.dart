@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
+import 'package:patient_portal/features/auth/providers/auth_provider.dart';
+import 'dart:convert';
 
-class ProfilePageContent extends StatelessWidget {
+class ProfilePageContent extends StatefulWidget {
   const ProfilePageContent({super.key});
+
+  @override
+  State<ProfilePageContent> createState() => _ProfilePageContentState();
+}
+
+class _ProfilePageContentState extends State<ProfilePageContent> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch profile when page loads
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.fetchProfile();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final authProvider = Provider.of<AuthProvider>(context);
+    final user = authProvider.user;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -97,36 +117,43 @@ class ProfilePageContent extends StatelessWidget {
                           // Name
                           SizedBox(
                             width: double.infinity,
-                            child: Text(
-                              'ADIFA KHOIRUNNISA',
-                              style: AppTypography.headlineSmall.copyWith(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                            child: authProvider.isLoading
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.white,
+                                    ),
+                                  )
+                                : Text(
+                                    user?.name.toUpperCase() ?? 'Loading...',
+                                    style: AppTypography.headlineSmall.copyWith(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
                           ),
                           const SizedBox(height: 8),
-                          // MR Number
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.white.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              'MR No: 00-00-41-35',
-                              style: AppTypography.bodyMedium.copyWith(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w600,
+                          // Email or Phone
+                          if (user != null)
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
                               ),
-                              textAlign: TextAlign.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.white.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Text(
+                                user.email,
+                                style: AppTypography.bodyMedium.copyWith(
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -525,13 +552,71 @@ class ProfilePageContent extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              // Close dialog
               Navigator.pop(context);
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/login',
-                (route) => false,
+
+              // Show loading indicator
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) => Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: isDarkMode ? AppColors.grey800 : AppColors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Logging out...',
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: isDarkMode
+                                ? AppColors.white
+                                : AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               );
+
+              // Logout from AuthProvider
+              final authProvider = Provider.of<AuthProvider>(
+                context,
+                listen: false,
+              );
+              await authProvider.logout();
+
+              // Close loading dialog
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+
+              // Navigate to login and clear all routes
+              if (context.mounted) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  (route) => false,
+                );
+              }
+
+              // Show success message
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Berhasil keluar'),
+                    backgroundColor: AppColors.success,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
