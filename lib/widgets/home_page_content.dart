@@ -330,7 +330,7 @@ class _HomePageContentState extends State<HomePageContent> {
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 16,
                     // Make each grid tile a bit taller to accommodate 2-line labels
-                    childAspectRatio: 0.75,
+                    childAspectRatio: 0.68,
                   ),
                   itemCount: menuItems.length,
                   itemBuilder: (context, index) {
@@ -365,7 +365,7 @@ class _HomePageContentState extends State<HomePageContent> {
                             width: 68,
                             height: 68,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
+                              shape: BoxShape.circle,
                               gradient: isDisabled
                                   ? LinearGradient(
                                       begin: Alignment.topLeft,
@@ -422,7 +422,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                 Positioned.fill(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
+                                      shape: BoxShape.circle,
                                       gradient: RadialGradient(
                                         center: Alignment.topLeft,
                                         radius: 1.5,
@@ -480,7 +480,7 @@ class _HomePageContentState extends State<HomePageContent> {
                                     : (isDarkMode
                                           ? AppColors.white
                                           : AppColors.textPrimary),
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w600,
                                 height: 1.3,
                                 letterSpacing: 0.2,

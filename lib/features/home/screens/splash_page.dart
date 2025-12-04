@@ -19,14 +19,14 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _checkAuthAndNavigate() async {
-    // Wait for auth provider to load saved auth
-    await Future.delayed(const Duration(milliseconds: 500));
-
     if (!mounted) return;
 
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-    // Wait a bit more for splash screen effect
+    // Load saved authentication
+    await authProvider.loadSavedAuth();
+
+    // Wait a bit for splash screen effect
     await Future.delayed(const Duration(seconds: 2));
 
     if (!mounted) return;

@@ -146,7 +146,7 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                user.email,
+                                user.phoneNumber,
                                 style: AppTypography.bodyMedium.copyWith(
                                   color: AppColors.white,
                                   fontWeight: FontWeight.w600,

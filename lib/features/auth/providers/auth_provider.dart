@@ -75,6 +75,11 @@ class AuthProvider extends ChangeNotifier {
     await prefs.setString('userId', _user!.id);
     await prefs.setString('userName', _user!.name);
     await prefs.setString('userEmail', _user!.email);
+    await prefs.setString('userPhone', _user!.phoneNumber);
+    if (_user!.dob != null) {
+      await prefs.setString('userDob', _user!.dob!);
+    }
+    await prefs.setString('userRole', _user!.role);
   }
 
   Future<void> loadSavedAuth() async {
@@ -87,10 +92,21 @@ class AuthProvider extends ChangeNotifier {
       final userId = prefs.getString('userId');
       final userName = prefs.getString('userName');
       final userEmail = prefs.getString('userEmail');
+      final userPhone = prefs.getString('userPhone');
+      final userDob = prefs.getString('userDob');
+      final userRole = prefs.getString('userRole');
 
       if (userId != null && userName != null && userEmail != null) {
         // Create a minimal user object from saved data
-        // In production, you might want to fetch fresh user data from API
+        _user = UserModel(
+          id: userId,
+          name: userName,
+          email: userEmail,
+          phoneNumber: userPhone ?? '',
+          dob: userDob,
+          role: userRole ?? 'patient',
+          createdAt: DateTime.now(),
+        );
         notifyListeners();
       }
     }

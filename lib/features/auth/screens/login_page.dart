@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/core/app_theme.dart';
+import 'package:patient_portal/core/utils/toast_utils.dart';
 import 'package:patient_portal/gen_l10n/app_localizations.dart';
 import 'package:patient_portal/features/auth/widgets/social_login_button.dart';
 import 'package:patient_portal/features/auth/providers/auth_provider.dart';
@@ -42,12 +43,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // Validate phone number
     if (_phoneController.text.isEmpty || _phoneController.text.length < 10) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.enterValidPhoneNumber),
-          backgroundColor: Colors.red,
-        ),
-      );
+      ToastUtils.showDefault(l10n.enterValidPhoneNumber);
       return;
     }
 
@@ -64,11 +60,8 @@ class _LoginPageState extends State<LoginPage> {
         );
       } else {
         // Show error message
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(authProvider.errorMessage ?? 'Failed to send OTP'),
-            backgroundColor: Colors.red,
-          ),
+        ToastUtils.showDefault(
+          authProvider.errorMessage ?? 'Failed to send OTP',
         );
       }
     }
