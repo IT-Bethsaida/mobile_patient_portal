@@ -23,18 +23,26 @@ class _SplashPageState extends State<SplashPage> {
 
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-    // Load saved authentication
-    await authProvider.loadSavedAuth();
+    try {
+      // Load saved authentication and ensure minimum splash duration
+      await Future.wait([
+        authProvider.loadSavedAuth(),
+        Future.delayed(
+          const Duration(milliseconds: 1500),
+        ), // Minimum display time
+      ]);
 
-    // Wait a bit for splash screen effect
-    await Future.delayed(const Duration(seconds: 2));
+      if (!mounted) return;
 
-    if (!mounted) return;
-
-    // Navigate based on auth state
-    if (authProvider.isAuthenticated) {
-      Navigator.pushReplacementNamed(context, '/home');
-    } else {
+      // Navigate based on auth state
+      if (authProvider.isAuthenticated) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
+    } catch (e) {
+      // If error occurs, navigate to login
+      if (!mounted) return;
       Navigator.pushReplacementNamed(context, '/login');
     }
   }

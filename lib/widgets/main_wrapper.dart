@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:patient_portal/core/app_colors.dart';
+import 'package:patient_portal/core/utils/toast_utils.dart';
 import 'package:patient_portal/widgets/home_page_content.dart';
 import 'package:patient_portal/widgets/appointment_page_content.dart';
 import 'package:patient_portal/widgets/medical_record_page_content.dart';
@@ -18,6 +20,7 @@ class MainWrapper extends StatefulWidget {
 class _MainWrapperState extends State<MainWrapper> {
   late int _currentIndex;
   int _previousIndex = 0;
+  DateTime? _lastPressedAt;
 
   @override
   void initState() {
@@ -34,6 +37,22 @@ class _MainWrapperState extends State<MainWrapper> {
     });
   }
 
+  Future<bool> _onWillPop() async {
+    final now = DateTime.now();
+    final backButtonHasNotBeenPressedOrSnackBarHasBeenClosed =
+        _lastPressedAt == null ||
+        now.difference(_lastPressedAt!) > const Duration(seconds: 2);
+
+    if (backButtonHasNotBeenPressedOrSnackBarHasBeenClosed) {
+      _lastPressedAt = now;
+      ToastUtils.showDefault('Tap again to exit');
+      return false;
+    }
+
+    SystemNavigator.pop();
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Pages for each tab
@@ -46,30 +65,37 @@ class _MainWrapperState extends State<MainWrapper> {
 
     final direction = _currentIndex >= _previousIndex ? 1.0 : -1.0;
 
-    return Scaffold(
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 260),
-        switchInCurve: Curves.easeOutCubic,
-        switchOutCurve: Curves.easeInCubic,
-        transitionBuilder: (child, animation) {
-          final offsetAnimation = Tween<Offset>(
-            begin: Offset(0.08 * direction, 0),
-            end: Offset.zero,
-          ).chain(CurveTween(curve: Curves.easeOutCubic)).animate(animation);
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        await _onWillPop();
+      },
+      child: Scaffold(
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 260),
+          switchInCurve: Curves.easeOutCubic,
+          switchOutCurve: Curves.easeInCubic,
+          transitionBuilder: (child, animation) {
+            final offsetAnimation = Tween<Offset>(
+              begin: Offset(0.08 * direction, 0),
+              end: Offset.zero,
+            ).chain(CurveTween(curve: Curves.easeOutCubic)).animate(animation);
 
-          return FadeTransition(
-            opacity: animation,
-            child: SlideTransition(position: offsetAnimation, child: child),
-          );
-        },
-        child: KeyedSubtree(
-          key: ValueKey<int>(_currentIndex),
-          child: pages[_currentIndex],
+            return FadeTransition(
+              opacity: animation,
+              child: SlideTransition(position: offsetAnimation, child: child),
+            );
+          },
+          child: KeyedSubtree(
+            key: ValueKey<int>(_currentIndex),
+            child: pages[_currentIndex],
+          ),
         ),
-      ),
-      bottomNavigationBar: _PillBottomNav(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
+        bottomNavigationBar: _PillBottomNav(
+          currentIndex: _currentIndex,
+          onTap: _onTabTapped,
+        ),
       ),
     );
   }
