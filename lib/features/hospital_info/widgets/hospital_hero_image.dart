@@ -21,22 +21,74 @@ class HospitalHeroImage extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            imageUrl,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                color: AppColors.primary.withValues(alpha: 0.1),
-                child: Center(
-                  child: Icon(
-                    Icons.local_hospital,
-                    color: AppColors.primary,
-                    size: 64,
+          imageUrl.isNotEmpty
+              ? Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      color: AppColors.grey100,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                              : null,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: AppColors.grey100,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/no-pictures.png',
+                              fit: BoxFit.contain,
+                              height: 150,
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              'No Image',
+                              style: TextStyle(
+                                color: AppColors.textSecondary,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                )
+              : Container(
+                  color: AppColors.grey100,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/no-pictures.png',
+                          fit: BoxFit.contain,
+                          height: 150,
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          'No Image',
+                          style: TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              );
-            },
-          ),
           // Gradient overlay for better text visibility
           Container(
             decoration: BoxDecoration(

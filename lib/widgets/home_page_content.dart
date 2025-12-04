@@ -91,25 +91,25 @@ class _HomePageContentState extends State<HomePageContent> {
     final l10n = AppLocalizations.of(context)!;
     return [
       {
-        'icon': Icons.local_hospital,
+        'iconImage': 'assets/images/hospital-information.png',
         'label': l10n.hospitalsInformation,
         'labelKey': 'hospitalsInformation',
         'color': AppColors.primary,
       },
       {
-        'icon': Icons.person,
+        'iconImage': 'assets/images/specialist.png',
         'label': l10n.doctors,
         'labelKey': 'doctors',
         'color': AppColors.primary,
       },
       {
-        'icon': Icons.star,
+        'iconImage': 'assets/images/quality-service.png',
         'label': l10n.premiumServices,
         'labelKey': 'premiumServices',
         'color': AppColors.primary,
       },
       {
-        'icon': Icons.apps,
+        'iconImage': 'assets/images/menu-all.png',
         'label': l10n.seeAll,
         'labelKey': 'seeAll',
         'color': AppColors.primary,
@@ -362,57 +362,128 @@ class _HomePageContentState extends State<HomePageContent> {
                       child: Column(
                         children: [
                           Container(
-                            width: 60,
-                            height: 60,
+                            width: 68,
+                            height: 68,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(20),
                               gradient: isDisabled
-                                  ? null
+                                  ? LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        AppColors.grey300.withValues(
+                                          alpha: 0.3,
+                                        ),
+                                        AppColors.grey200.withValues(
+                                          alpha: 0.3,
+                                        ),
+                                      ],
+                                    )
                                   : LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                       colors: [
                                         AppColors.primary.withValues(
-                                          alpha: 0.1,
+                                          alpha: 0.15,
                                         ),
                                         AppColors.primary.withValues(
-                                          alpha: 0.2,
+                                          alpha: 0.08,
                                         ),
                                       ],
                                     ),
-                              color: isDisabled
-                                  ? AppColors.grey200.withValues(alpha: 0.5)
-                                  : null,
-                              border: Border.all(
-                                color: AppColors.primary.withValues(alpha: 0.2),
-                                width: 1,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.1,
+                              boxShadow: isDisabled
+                                  ? null
+                                  : [
+                                      BoxShadow(
+                                        color: AppColors.primary.withValues(
+                                          alpha: 0.15,
+                                        ),
+                                        blurRadius: 12,
+                                        offset: const Offset(0, 4),
+                                        spreadRadius: 0,
+                                      ),
+                                      BoxShadow(
+                                        color: isDarkMode
+                                            ? Colors.black.withValues(
+                                                alpha: 0.1,
+                                              )
+                                            : Colors.white.withValues(
+                                                alpha: 0.8,
+                                              ),
+                                        blurRadius: 4,
+                                        offset: const Offset(-2, -2),
+                                        spreadRadius: 0,
+                                      ),
+                                    ],
+                            ),
+                            child: Stack(
+                              children: [
+                                // Subtle radial gradient overlay for depth
+                                Positioned.fill(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      gradient: RadialGradient(
+                                        center: Alignment.topLeft,
+                                        radius: 1.5,
+                                        colors: [
+                                          Colors.white.withValues(alpha: 0.2),
+                                          Colors.transparent,
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
+                                ),
+                                // Icon centered
+                                Center(
+                                  child: item['iconImage'] != null
+                                      ? Image.asset(
+                                          item['iconImage'],
+                                          width: 45,
+                                          height: 45,
+                                          fit: BoxFit.contain,
+                                          color: isDisabled
+                                              ? AppColors.grey400
+                                              : null,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                                return Icon(
+                                                  Icons.image_not_supported,
+                                                  color: isDisabled
+                                                      ? AppColors.grey400
+                                                      : AppColors.primary,
+                                                  size: 32,
+                                                );
+                                              },
+                                        )
+                                      : Icon(
+                                          item['icon'],
+                                          color: isDisabled
+                                              ? AppColors.grey400
+                                              : AppColors.primary,
+                                          size: 32,
+                                        ),
                                 ),
                               ],
                             ),
-                            child: Icon(
-                              item['icon'],
-                              color: item['color'],
-                              size: 28,
-                            ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 10),
                           Flexible(
                             child: Text(
                               item['label'],
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTypography.labelSmall.copyWith(
+                              style: AppTypography.labelMedium.copyWith(
                                 color: isDisabled
                                     ? AppColors.textSecondary
-                                    : AppColors.textPrimary,
-                                fontSize: 11,
+                                    : (isDarkMode
+                                          ? AppColors.white
+                                          : AppColors.textPrimary),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                height: 1.3,
+                                letterSpacing: 0.2,
                               ),
                             ),
                           ),

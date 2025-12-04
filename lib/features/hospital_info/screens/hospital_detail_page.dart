@@ -8,6 +8,7 @@ import 'package:patient_portal/features/hospital_info/widgets/hospital_info_card
 import 'package:patient_portal/features/hospital_info/widgets/operational_hours_card.dart';
 import 'package:patient_portal/features/hospital_info/widgets/facilities_card.dart';
 import 'package:patient_portal/features/hospital_info/widgets/gallery_card.dart';
+import 'package:patient_portal/features/hospital_info/widgets/hospital_detail_shimmer.dart';
 import 'package:patient_portal/core/network/api_response.dart';
 import 'package:patient_portal/shared/widgets/state_widgets.dart';
 
@@ -87,9 +88,9 @@ class _HospitalDetailPageState extends State<HospitalDetailPage> {
       body: FutureBuilder<ApiResponse<HospitalModel>>(
         future: _hospitalFuture,
         builder: (context, snapshot) {
-          // Loading state
+          // Loading state with shimmer
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const LoadingState(message: 'Loading hospital details...');
+            return const HospitalDetailShimmer();
           }
 
           // Error state

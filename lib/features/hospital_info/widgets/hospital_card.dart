@@ -61,31 +61,72 @@ class HospitalCard extends StatelessWidget {
             height: 180,
             width: double.infinity,
             color: AppColors.grey200,
-            child: Image.asset(
-              hospital.image,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        AppColors.primary.withValues(alpha: 0.1),
-                        AppColors.primary.withValues(alpha: 0.2),
-                      ],
+            child: hospital.image.isNotEmpty
+                ? Image.network(
+                    hospital.image,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Container(
+                        color: AppColors.grey100,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                : null,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: AppColors.grey100,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/images/no-pictures.png',
+                                fit: BoxFit.contain,
+                                height: 150,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'No Image',
+                                style: AppTypography.bodySmall.copyWith(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                : Container(
+                    color: AppColors.grey100,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/no-pictures.png',
+                            fit: BoxFit.contain,
+                            height: 150,
+                          ),
+                          const SizedBox(height: 1),
+                          Text(
+                            'No Image',
+                            style: AppTypography.bodySmall.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  child: Center(
-                    child: Icon(
-                      Icons.local_hospital,
-                      color: AppColors.primary,
-                      size: 64,
-                    ),
-                  ),
-                );
-              },
-            ),
           ),
         ),
         Positioned(
