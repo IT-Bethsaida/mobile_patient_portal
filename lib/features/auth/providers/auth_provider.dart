@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:patient_portal/core/storage/secure_storage.dart';
 import 'package:patient_portal/features/auth/models/user_model.dart';
 import 'package:patient_portal/features/auth/models/register_request.dart';
 import 'package:patient_portal/features/auth/models/otp_request.dart';
@@ -69,36 +69,37 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> _saveTokens() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('accessToken', _accessToken!);
-    await prefs.setString('refreshToken', _refreshToken!);
+    // Save tokens to secure storage
+    await SecureStorage.saveAccessToken(_accessToken!);
+    await SecureStorage.saveRefreshToken(_refreshToken!);
+    await SecureStorage.saveTokenTimestamp(
+      DateTime.now().millisecondsSinceEpoch,
+    );
 
-    // Save token timestamp for expiry checking
-    await prefs.setInt('tokenTimestamp', DateTime.now().millisecondsSinceEpoch);
-
-    await prefs.setString('userId', _user!.id);
-    await prefs.setString('userName', _user!.name);
-    await prefs.setString('userEmail', _user!.email);
-    await prefs.setString('userPhone', _user!.phoneNumber);
-    if (_user!.dob != null) {
-      await prefs.setString('userDob', _user!.dob!);
-    }
-    await prefs.setString('userRole', _user!.role);
+    // Save user data to secure storage
+    await SecureStorage.saveUserData(
+      userId: _user!.id,
+      userName: _user!.name,
+      userEmail: _user!.email,
+      userPhone: _user!.phoneNumber,
+      userDob: _user!.dob,
+      userRole: _user!.role,
+    );
   }
 
   Future<void> loadSavedAuth() async {
-    final prefs = await SharedPreferences.getInstance();
-    _accessToken = prefs.getString('accessToken');
-    _refreshToken = prefs.getString('refreshToken');
+    // Load tokens from secure storage
+    _accessToken = await SecureStorage.getAccessToken();
+    _refreshToken = await SecureStorage.getRefreshToken();
 
     if (_accessToken != null) {
-      // Load user data from preferences
-      final userId = prefs.getString('userId');
-      final userName = prefs.getString('userName');
-      final userEmail = prefs.getString('userEmail');
-      final userPhone = prefs.getString('userPhone');
-      final userDob = prefs.getString('userDob');
-      final userRole = prefs.getString('userRole');
+      // Load user data from secure storage
+      final userId = await SecureStorage.getUserId();
+      final userName = await SecureStorage.getUserName();
+      final userEmail = await SecureStorage.getUserEmail();
+      final userPhone = await SecureStorage.getUserPhone();
+      final userDob = await SecureStorage.getUserDob();
+      final userRole = await SecureStorage.getUserRole();
 
       if (userId != null && userName != null && userEmail != null) {
         // Create a minimal user object from saved data
@@ -192,12 +193,10 @@ class AuthProvider extends ChangeNotifier {
         _accessToken = response.data!.accessToken;
         _refreshToken = response.data!.refreshToken;
 
-        // Save new tokens
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('accessToken', _accessToken!);
-        await prefs.setString('refreshToken', _refreshToken!);
-        await prefs.setInt(
-          'tokenTimestamp',
+        // Save new tokens to secure storage
+        await SecureStorage.saveAccessToken(_accessToken!);
+        await SecureStorage.saveRefreshToken(_refreshToken!);
+        await SecureStorage.saveTokenTimestamp(
           DateTime.now().millisecondsSinceEpoch,
         );
 
@@ -230,11 +229,15 @@ class AuthProvider extends ChangeNotifier {
       if (response.success && response.data != null) {
         _user = response.data;
 
-        // Update saved user data
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('userId', _user!.id);
-        await prefs.setString('userName', _user!.name);
-        await prefs.setString('userEmail', _user!.email);
+        // Update saved user data to secure storage
+        await SecureStorage.saveUserData(
+          userId: _user!.id,
+          userName: _user!.name,
+          userEmail: _user!.email,
+          userPhone: _user!.phoneNumber,
+          userDob: _user!.dob,
+          userRole: _user!.role,
+        );
 
         _isLoading = false;
         notifyListeners();
@@ -254,8 +257,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    // Clear all secure storage
+    await SecureStorage.clearAll();
 
     _user = null;
     _accessToken = null;

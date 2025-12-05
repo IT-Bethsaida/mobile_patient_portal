@@ -1,4 +1,4 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:patient_portal/core/storage/secure_storage.dart';
 
 /// API Client helper untuk mengelola headers dan authentication
 class ApiClient {
@@ -10,8 +10,7 @@ class ApiClient {
     };
 
     // Add authorization token if available
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('accessToken');
+    final token = await SecureStorage.getAccessToken();
     if (token != null) {
       headers['Authorization'] = 'Bearer $token';
     }
@@ -24,15 +23,13 @@ class ApiClient {
     return {'Content-Type': 'application/json', 'Accept': 'application/json'};
   }
 
-  /// Get access token from SharedPreferences
+  /// Get access token from Secure Storage
   static Future<String?> getAccessToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('accessToken');
+    return await SecureStorage.getAccessToken();
   }
 
-  /// Get refresh token from SharedPreferences
+  /// Get refresh token from Secure Storage
   static Future<String?> getRefreshToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('refreshToken');
+    return await SecureStorage.getRefreshToken();
   }
 }

@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:patient_portal/core/network/api_client.dart';
+import 'package:patient_portal/core/storage/secure_storage.dart';
 import 'package:patient_portal/features/auth/services/auth_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// HTTP Client with automatic token refresh on 401
 class HttpClientWithRefresh {
@@ -115,12 +115,10 @@ class HttpClientWithRefresh {
       final response = await AuthService.refreshToken(refreshToken);
 
       if (response.success && response.data != null) {
-        // Save new tokens
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('accessToken', response.data!.accessToken);
-        await prefs.setString('refreshToken', response.data!.refreshToken);
-        await prefs.setInt(
-          'tokenTimestamp',
+        // Save new tokens to secure storage
+        await SecureStorage.saveAccessToken(response.data!.accessToken);
+        await SecureStorage.saveRefreshToken(response.data!.refreshToken);
+        await SecureStorage.saveTokenTimestamp(
           DateTime.now().millisecondsSinceEpoch,
         );
 
