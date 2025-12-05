@@ -7,6 +7,7 @@ import 'package:patient_portal/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:patient_portal/screens/doctor_detail_page.dart';
 import 'package:patient_portal/features/promos/screens/promo_detail_page.dart';
+import 'package:patient_portal/widgets/ai_floating_button.dart';
 
 class HomePageContent extends StatefulWidget {
   const HomePageContent({super.key});
@@ -835,6 +836,11 @@ class _HomePageContentState extends State<HomePageContent> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: AIFloatingButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/ai-chat');
+        },
       ),
     );
   }

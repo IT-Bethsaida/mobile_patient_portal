@@ -29,6 +29,7 @@ import 'package:patient_portal/screens/lab_results_page.dart';
 import 'package:patient_portal/screens/medications_page.dart';
 import 'package:patient_portal/screens/notifications_page.dart';
 import 'package:patient_portal/widgets/main_wrapper.dart';
+import 'package:patient_portal/features/ai_assistant/screens/ai_chat_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -102,6 +103,7 @@ class MyApp extends StatelessWidget {
               '/lab-results': (context) => const LabResultsPage(),
               '/medications': (context) => const MedicationsPage(),
               '/notifications': (context) => const NotificationsPage(),
+              '/ai-chat': (context) => const AIChatPage(),
             },
           );
         },

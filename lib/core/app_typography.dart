@@ -60,19 +60,19 @@ class AppTypography {
 
   // Body Styles
   static const TextStyle bodyLarge = TextStyle(
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: FontWeight.w400,
     height: 1.5,
   );
 
   static const TextStyle bodyMedium = TextStyle(
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     height: 1.5,
   );
 
   static const TextStyle bodySmall = TextStyle(
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
     height: 1.5,
   );
