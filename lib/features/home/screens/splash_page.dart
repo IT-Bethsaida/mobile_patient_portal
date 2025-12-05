@@ -34,10 +34,24 @@ class _SplashPageState extends State<SplashPage> {
 
       if (!mounted) return;
 
-      // Navigate based on auth state
+      // If user has saved auth, try to refresh token to ensure it's valid
       if (authProvider.isAuthenticated) {
-        Navigator.pushReplacementNamed(context, '/home');
+        // Try to refresh token silently
+        final refreshSuccess = await authProvider.refreshAccessToken();
+
+        if (!mounted) return;
+
+        if (refreshSuccess) {
+          // Token refreshed successfully, go to home
+          Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          // Refresh failed, token might be expired, go to login
+          await authProvider.logout();
+          if (!mounted) return;
+          Navigator.pushReplacementNamed(context, '/login');
+        }
       } else {
+        // No saved auth, go to login
         Navigator.pushReplacementNamed(context, '/login');
       }
     } catch (e) {

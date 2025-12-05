@@ -54,9 +54,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => LocalizationProvider()),
-        ChangeNotifierProvider(
-          create: (context) => AuthProvider()..loadSavedAuth(),
-        ),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
       ],
       child: Consumer2<ThemeProvider, LocalizationProvider>(
         builder: (context, themeProvider, localizationProvider, child) {

@@ -72,6 +72,10 @@ class AuthProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('accessToken', _accessToken!);
     await prefs.setString('refreshToken', _refreshToken!);
+
+    // Save token timestamp for expiry checking
+    await prefs.setInt('tokenTimestamp', DateTime.now().millisecondsSinceEpoch);
+
     await prefs.setString('userId', _user!.id);
     await prefs.setString('userName', _user!.name);
     await prefs.setString('userEmail', _user!.email);
@@ -192,6 +196,10 @@ class AuthProvider extends ChangeNotifier {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('accessToken', _accessToken!);
         await prefs.setString('refreshToken', _refreshToken!);
+        await prefs.setInt(
+          'tokenTimestamp',
+          DateTime.now().millisecondsSinceEpoch,
+        );
 
         notifyListeners();
         return true;

@@ -115,7 +115,7 @@ class AuthService {
     String refreshToken,
   ) async {
     try {
-      final uri = Uri.parse('$baseUrl/auth/refresh');
+      final uri = Uri.parse('$baseUrl/auth/refresh-token');
 
       final response = await http
           .post(

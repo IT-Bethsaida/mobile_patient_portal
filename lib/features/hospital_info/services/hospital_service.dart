@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:patient_portal/features/hospital_info/models/hospital_model.dart';
 import 'package:patient_portal/core/network/api_response.dart';
-import 'package:patient_portal/core/network/api_client.dart';
+import 'package:patient_portal/core/network/http_client_with_refresh.dart';
 import 'package:patient_portal/core/config/env_config.dart';
 
 class HospitalService {
@@ -11,11 +10,10 @@ class HospitalService {
   static Future<ApiResponse<List<HospitalModel>>> getHospitals() async {
     try {
       final uri = Uri.parse('$baseUrl/hospitals');
-      final headers = await ApiClient.getHeaders();
 
-      final response = await http
-          .get(uri, headers: headers)
-          .timeout(Duration(seconds: EnvConfig.apiTimeout));
+      final response = await HttpClientWithRefresh.get(
+        uri,
+      ).timeout(Duration(seconds: EnvConfig.apiTimeout));
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
@@ -49,11 +47,10 @@ class HospitalService {
   static Future<ApiResponse<HospitalModel>> getHospitalById(String id) async {
     try {
       final uri = Uri.parse('$baseUrl/hospitals/$id');
-      final headers = await ApiClient.getHeaders();
 
-      final response = await http
-          .get(uri, headers: headers)
-          .timeout(Duration(seconds: EnvConfig.apiTimeout));
+      final response = await HttpClientWithRefresh.get(
+        uri,
+      ).timeout(Duration(seconds: EnvConfig.apiTimeout));
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
