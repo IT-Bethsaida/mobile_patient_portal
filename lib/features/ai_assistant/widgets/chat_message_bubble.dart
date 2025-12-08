@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:intl/intl.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
@@ -78,16 +79,53 @@ class ChatMessageBubble extends StatelessWidget {
                   ),
                   child: isTyping
                       ? _buildTypingIndicator()
-                      : Text(
+                      : message.isUser
+                      ? Text(
                           message.text,
                           style: AppTypography.bodyMedium.copyWith(
-                            color: message.isUser
-                                ? AppColors.white
-                                : (isDarkMode
-                                      ? AppColors.white
-                                      : AppColors.black),
+                            color: AppColors.white,
                             height: 1.4,
                           ),
+                        )
+                      : MarkdownBody(
+                          data: message.text,
+                          styleSheet: MarkdownStyleSheet(
+                            p: AppTypography.bodyMedium.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              height: 1.4,
+                            ),
+                            strong: AppTypography.bodyMedium.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              fontWeight: FontWeight.bold,
+                              height: 1.4,
+                            ),
+                            em: AppTypography.bodyMedium.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              fontStyle: FontStyle.italic,
+                              height: 1.4,
+                            ),
+                            code: AppTypography.bodyMedium.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black,
+                              backgroundColor: isDarkMode
+                                  ? AppColors.grey700
+                                  : AppColors.grey200,
+                              fontFamily: 'monospace',
+                            ),
+                            listBullet: AppTypography.bodyMedium.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.black,
+                            ),
+                          ),
+                          selectable: true,
                         ),
                 ),
                 const SizedBox(height: 4),

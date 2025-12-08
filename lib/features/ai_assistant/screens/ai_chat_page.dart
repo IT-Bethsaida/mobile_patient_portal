@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
+import 'package:patient_portal/core/utils/toast_utils.dart';
 import 'package:patient_portal/features/ai_assistant/widgets/chat_message_bubble.dart';
 import 'package:patient_portal/features/ai_assistant/models/chat_message.dart';
+import 'package:patient_portal/features/ai_assistant/services/chatbot_service.dart';
 
 class AIChatPage extends StatefulWidget {
   const AIChatPage({super.key});
@@ -16,11 +18,12 @@ class _AIChatPageState extends State<AIChatPage> {
   final ScrollController _scrollController = ScrollController();
   final List<ChatMessage> _messages = [];
   bool _isTyping = false;
+  bool _isLoadingHistory = true;
 
   @override
   void initState() {
     super.initState();
-    _addWelcomeMessage();
+    _loadChatHistory();
   }
 
   @override
@@ -30,17 +33,74 @@ class _AIChatPageState extends State<AIChatPage> {
     super.dispose();
   }
 
-  void _addWelcomeMessage() {
+  Future<void> _loadChatHistory() async {
     setState(() {
-      _messages.add(
-        ChatMessage(
-          text:
-              'Hello! I\'m your AI Health Assistant. How can I help you today?',
-          isUser: false,
-          timestamp: DateTime.now(),
-        ),
-      );
+      _isLoadingHistory = true;
     });
+
+    try {
+      final response = await ChatbotService.getHistory(limit: 50);
+
+      if (mounted) {
+        setState(() {
+          _isLoadingHistory = false;
+
+          if (response.success && response.data != null) {
+            // Convert backend messages to ChatMessage
+            final historyMessages = response.data!.messages.map((msg) {
+              return ChatMessage(
+                text: msg.content,
+                isUser: msg.role == 'USER',
+                timestamp: msg.createdAt,
+              );
+            }).toList();
+
+            _messages.addAll(historyMessages);
+          }
+
+          // Add welcome message if no history
+          if (_messages.isEmpty) {
+            _messages.add(
+              ChatMessage(
+                text:
+                    'Halo! Saya adalah asisten virtual **Bethsaida Hospital**. '
+                    'Saya siap membantu Anda dengan informasi seputar:\n\n'
+                    '• **Layanan rumah sakit**\n'
+                    '• **Jadwal dokter**\n'
+                    '• **Booking appointment**\n'
+                    '• **Informasi umum**\n\n'
+                    'Ada yang bisa saya bantu? 😊',
+                isUser: false,
+                timestamp: DateTime.now(),
+              ),
+            );
+          }
+        });
+
+        _scrollToBottom();
+      }
+    } catch (e) {
+      // Catch any exception and fallback to welcome message
+      if (mounted) {
+        setState(() {
+          _isLoadingHistory = false;
+          _messages.add(
+            ChatMessage(
+              text:
+                  'Halo! Saya adalah asisten virtual **Bethsaida Hospital**. '
+                  'Saya siap membantu Anda dengan informasi seputar:\n\n'
+                  '• **Layanan rumah sakit**\n'
+                  '• **Jadwal dokter**\n'
+                  '• **Booking appointment**\n'
+                  '• **Informasi umum**\n\n'
+                  'Ada yang bisa saya bantu? 😊',
+              isUser: false,
+              timestamp: DateTime.now(),
+            ),
+          );
+        });
+      }
+    }
   }
 
   void _scrollToBottom() {
@@ -70,42 +130,35 @@ class _AIChatPageState extends State<AIChatPage> {
     _messageController.clear();
     _scrollToBottom();
 
-    // Simulate AI response
-    await Future.delayed(const Duration(seconds: 2));
+    // Send message to API
+    final response = await ChatbotService.sendMessage(text);
 
     if (mounted) {
       setState(() {
-        _messages.add(
-          ChatMessage(
-            text: _generateAIResponse(text),
-            isUser: false,
-            timestamp: DateTime.now(),
-          ),
-        );
         _isTyping = false;
+        if (response.success && response.data != null) {
+          _messages.add(
+            ChatMessage(
+              text: response.data!.content,
+              isUser: false,
+              timestamp: response.data!.createdAt,
+            ),
+          );
+        } else {
+          // Show error message
+          ToastUtils.showError(response.message ?? 'Failed to get response');
+          // Add fallback message
+          _messages.add(
+            ChatMessage(
+              text:
+                  'Sorry, I\'m having trouble connecting. Please try again later.',
+              isUser: false,
+              timestamp: DateTime.now(),
+            ),
+          );
+        }
       });
       _scrollToBottom();
-    }
-  }
-
-  String _generateAIResponse(String userMessage) {
-    // Simple mock responses
-    final lowerMessage = userMessage.toLowerCase();
-
-    if (lowerMessage.contains('appointment') || lowerMessage.contains('book')) {
-      return 'I can help you book an appointment! Please go to the Appointment tab to schedule a visit with our doctors.';
-    } else if (lowerMessage.contains('doctor') ||
-        lowerMessage.contains('specialist')) {
-      return 'We have many experienced doctors and specialists. You can browse our doctors in the home page or search for specific specialties.';
-    } else if (lowerMessage.contains('symptom') ||
-        lowerMessage.contains('sick')) {
-      return 'I understand you\'re not feeling well. For accurate diagnosis, I recommend booking an appointment with our doctors. Would you like me to help you with that?';
-    } else if (lowerMessage.contains('emergency')) {
-      return 'For medical emergencies, please call our emergency hotline immediately or visit the Emergency section in the app.';
-    } else if (lowerMessage.contains('hello') || lowerMessage.contains('hi')) {
-      return 'Hello! How can I assist you with your healthcare needs today?';
-    } else {
-      return 'Thank you for your message. I\'m here to help with appointments, finding doctors, and general health inquiries. How can I assist you?';
     }
   }
 
@@ -173,7 +226,9 @@ class _AIChatPageState extends State<AIChatPage> {
         children: [
           // Messages List
           Expanded(
-            child: _messages.isEmpty
+            child: _isLoadingHistory
+                ? const Center(child: CircularProgressIndicator())
+                : _messages.isEmpty
                 ? Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
