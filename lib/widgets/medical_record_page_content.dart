@@ -75,7 +75,7 @@ class MedicalRecordPageContent extends StatelessWidget {
                   GestureDetector(
                     onTap: () => Navigator.pushNamed(context, '/medications'),
                     child: _buildMedicalRecordCard(
-                      'Obat Anda',
+                      'Obat - obatan',
                       'Daftar resep obat dan informasi penggunaan yang direkomendasikan',
                       Icons.medication,
                       isDarkMode,

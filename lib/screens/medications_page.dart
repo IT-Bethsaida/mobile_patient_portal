@@ -60,7 +60,7 @@ class MedicationsPage extends StatelessWidget {
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
         title: Text(
-          'Obat Anda',
+          'Obat - obatan',
           style: AppTypography.titleLarge.copyWith(
             color: AppColors.white,
             fontWeight: FontWeight.w600,

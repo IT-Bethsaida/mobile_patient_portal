@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/features/ai_assistant/models/chat_message.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class ChatMessageBubble extends StatelessWidget {
   final ChatMessage message;
@@ -42,7 +43,7 @@ class ChatMessageBubble extends StatelessWidget {
               child: const Icon(
                 Icons.auto_awesome,
                 color: AppColors.white,
-                size: 20,
+                size: 18,
               ),
             ),
             const SizedBox(width: 8),
@@ -89,6 +90,8 @@ class ChatMessageBubble extends StatelessWidget {
                         )
                       : MarkdownBody(
                           data: message.text,
+                          shrinkWrap: true,
+                          fitContent: true,
                           styleSheet: MarkdownStyleSheet(
                             p: AppTypography.bodyMedium.copyWith(
                               color: isDarkMode
@@ -150,7 +153,7 @@ class ChatMessageBubble extends StatelessWidget {
                 color: AppColors.grey300,
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.person, color: AppColors.grey600, size: 20),
+              child: Icon(LucideIcons.user, color: AppColors.grey600, size: 18),
             ),
           ],
         ],

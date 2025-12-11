@@ -5,6 +5,7 @@ import 'package:patient_portal/core/utils/toast_utils.dart';
 import 'package:patient_portal/features/ai_assistant/widgets/chat_message_bubble.dart';
 import 'package:patient_portal/features/ai_assistant/models/chat_message.dart';
 import 'package:patient_portal/features/ai_assistant/services/chatbot_service.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class AIChatPage extends StatefulWidget {
   const AIChatPage({super.key});
@@ -115,6 +116,135 @@ class _AIChatPageState extends State<AIChatPage> {
     });
   }
 
+  void _showOptionsMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 12),
+              Container(
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.grey300,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ListTile(
+                leading: Icon(LucideIcons.trash2, color: Colors.red),
+                title: Text(
+                  'Clear chat',
+                  style: AppTypography.bodyLarge.copyWith(
+                    color: Colors.red,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  _showClearChatConfirmation(context);
+                },
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showClearChatConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            Icon(LucideIcons.triangleAlert, color: Colors.orange, size: 24),
+            const SizedBox(width: 12),
+            Text(
+              'Clear Chat',
+              style: AppTypography.titleMedium.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          'Are you sure you want to clear all chat messages? This action cannot be undone.',
+          style: AppTypography.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Cancel',
+              style: AppTypography.bodyMedium.copyWith(
+                color: AppColors.grey600,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _clearChat();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: AppColors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: Text(
+              'Clear',
+              style: AppTypography.bodyMedium.copyWith(
+                color: AppColors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _clearChat() {
+    setState(() {
+      _messages.clear();
+      // Add welcome message back
+      _messages.add(
+        ChatMessage(
+          text:
+              'Halo! Saya adalah asisten virtual **Bethsaida Hospital**. '
+              'Saya siap membantu Anda dengan informasi seputar:\n\n'
+              '• **Layanan rumah sakit**\n'
+              '• **Jadwal dokter**\n'
+              '• **Booking appointment**\n'
+              '• **Informasi umum**\n\n'
+              'Ada yang bisa saya bantu? 😊',
+          isUser: false,
+          timestamp: DateTime.now(),
+        ),
+      );
+    });
+    ToastUtils.showSuccess('Chat cleared successfully');
+  }
+
   Future<void> _sendMessage() async {
     final text = _messageController.text.trim();
     if (text.isEmpty) return;
@@ -215,10 +345,8 @@ class _AIChatPageState extends State<AIChatPage> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, color: AppColors.white),
-            onPressed: () {
-              // Show options menu
-            },
+            icon: Icon(LucideIcons.ellipsisVertical, color: AppColors.white),
+            onPressed: () => _showOptionsMenu(context),
           ),
         ],
       ),
@@ -251,10 +379,14 @@ class _AIChatPageState extends State<AIChatPage> {
                 : ListView.builder(
                     controller: _scrollController,
                     padding: const EdgeInsets.all(16),
+                    physics: const ClampingScrollPhysics(),
                     itemCount: _messages.length + (_isTyping ? 1 : 0),
+                    addAutomaticKeepAlives: true,
+                    cacheExtent: 1000,
                     itemBuilder: (context, index) {
                       if (index == _messages.length && _isTyping) {
                         return ChatMessageBubble(
+                          key: const ValueKey('typing'),
                           message: ChatMessage(
                             text: '',
                             isUser: false,
@@ -263,7 +395,10 @@ class _AIChatPageState extends State<AIChatPage> {
                           isTyping: true,
                         );
                       }
-                      return ChatMessageBubble(message: _messages[index]);
+                      return ChatMessageBubble(
+                        key: ValueKey(_messages[index].timestamp.toString()),
+                        message: _messages[index],
+                      );
                     },
                   ),
           ),
@@ -334,7 +469,7 @@ class _AIChatPageState extends State<AIChatPage> {
                     ],
                   ),
                   child: IconButton(
-                    icon: const Icon(Icons.send, color: AppColors.white),
+                    icon: const Icon(LucideIcons.send, color: AppColors.white),
                     onPressed: _sendMessage,
                   ),
                 ),

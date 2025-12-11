@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:patient_portal/screens/doctor_detail_page.dart';
 import 'package:patient_portal/features/promos/screens/promo_detail_page.dart';
 import 'package:patient_portal/widgets/ai_floating_button.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class HomePageContent extends StatefulWidget {
   const HomePageContent({super.key});
@@ -92,25 +93,25 @@ class _HomePageContentState extends State<HomePageContent> {
     final l10n = AppLocalizations.of(context)!;
     return [
       {
-        'iconImage': 'assets/images/hospital-information.png',
+        'icon': LucideIcons.hospital,
         'label': l10n.hospitalsInformation,
         'labelKey': 'hospitalsInformation',
         'color': AppColors.primary,
       },
       {
-        'iconImage': 'assets/images/specialist.png',
+        'icon': LucideIcons.stethoscope,
         'label': l10n.doctors,
         'labelKey': 'doctors',
         'color': AppColors.primary,
       },
       {
-        'iconImage': 'assets/images/quality-service.png',
+        'icon': LucideIcons.sparkles,
         'label': l10n.premiumServices,
         'labelKey': 'premiumServices',
         'color': AppColors.primary,
       },
       {
-        'iconImage': 'assets/images/menu-all.png',
+        'icon': LucideIcons.layoutGrid,
         'label': l10n.seeAll,
         'labelKey': 'seeAll',
         'color': AppColors.primary,
@@ -301,7 +302,7 @@ class _HomePageContentState extends State<HomePageContent> {
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                           ),
-                          icon: const Icon(Icons.local_hospital, size: 20),
+                          icon: const Icon(LucideIcons.siren, size: 20),
                           label: Text(
                             l10n.emergency,
                             style: AppTypography.bodySmall.copyWith(
@@ -363,53 +364,31 @@ class _HomePageContentState extends State<HomePageContent> {
                       child: Column(
                         children: [
                           Container(
-                            width: 68,
-                            height: 68,
+                            width: 55,
+                            height: 55,
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: isDisabled
-                                  ? LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        AppColors.grey300.withValues(
-                                          alpha: 0.3,
-                                        ),
-                                        AppColors.grey200.withValues(
-                                          alpha: 0.3,
-                                        ),
-                                      ],
-                                    )
-                                  : LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        AppColors.primary.withValues(
-                                          alpha: 0.15,
-                                        ),
-                                        AppColors.primary.withValues(
-                                          alpha: 0.08,
-                                        ),
-                                      ],
-                                    ),
+                              borderRadius: BorderRadius.circular(16),
+                              color: isDisabled
+                                  ? AppColors.grey300
+                                  : AppColors.primary,
                               boxShadow: isDisabled
                                   ? null
                                   : [
                                       BoxShadow(
                                         color: AppColors.primary.withValues(
-                                          alpha: 0.15,
+                                          alpha: 0.3,
                                         ),
-                                        blurRadius: 12,
+                                        blurRadius: 20,
                                         offset: const Offset(0, 4),
                                         spreadRadius: 0,
                                       ),
                                       BoxShadow(
                                         color: isDarkMode
                                             ? Colors.black.withValues(
-                                                alpha: 0.1,
+                                                alpha: 0.2,
                                               )
                                             : Colors.white.withValues(
-                                                alpha: 0.8,
+                                                alpha: 0.5,
                                               ),
                                         blurRadius: 4,
                                         offset: const Offset(-2, -2),
@@ -423,12 +402,12 @@ class _HomePageContentState extends State<HomePageContent> {
                                 Positioned.fill(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
+                                      borderRadius: BorderRadius.circular(16),
                                       gradient: RadialGradient(
                                         center: Alignment.topLeft,
                                         radius: 1.5,
                                         colors: [
-                                          Colors.white.withValues(alpha: 0.2),
+                                          Colors.white.withValues(alpha: 0.15),
                                           Colors.transparent,
                                         ],
                                       ),
@@ -437,33 +416,13 @@ class _HomePageContentState extends State<HomePageContent> {
                                 ),
                                 // Icon centered
                                 Center(
-                                  child: item['iconImage'] != null
-                                      ? Image.asset(
-                                          item['iconImage'],
-                                          width: 45,
-                                          height: 45,
-                                          fit: BoxFit.contain,
-                                          color: isDisabled
-                                              ? AppColors.grey400
-                                              : null,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                                return Icon(
-                                                  Icons.image_not_supported,
-                                                  color: isDisabled
-                                                      ? AppColors.grey400
-                                                      : AppColors.primary,
-                                                  size: 32,
-                                                );
-                                              },
-                                        )
-                                      : Icon(
-                                          item['icon'],
-                                          color: isDisabled
-                                              ? AppColors.grey400
-                                              : AppColors.primary,
-                                          size: 32,
-                                        ),
+                                  child: Icon(
+                                    item['icon'],
+                                    color: isDisabled
+                                        ? AppColors.grey600
+                                        : AppColors.white,
+                                    size: 32,
+                                  ),
                                 ),
                               ],
                             ),

@@ -3,6 +3,7 @@ import 'package:patient_portal/core/app_colors.dart';
 import 'package:patient_portal/core/app_theme.dart';
 import 'package:patient_portal/core/app_typography.dart';
 import 'package:patient_portal/gen_l10n/app_localizations.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class AllServicesPage extends StatelessWidget {
   const AllServicesPage({super.key});
@@ -13,60 +14,51 @@ class AllServicesPage extends StatelessWidget {
 
     final allServices = [
       {
-        'icon': Icons.local_hospital,
+        'icon': LucideIcons.building2,
         'label': l10n.hospitalsInformation,
         'labelKey': 'hospitalsInformation',
-        'color': AppColors.primary,
       },
       {
-        'icon': Icons.person,
+        'icon': LucideIcons.stethoscope,
         'label': l10n.doctors,
         'labelKey': 'doctors',
-        'color': AppColors.primary,
       },
       {
-        'icon': Icons.star,
+        'icon': LucideIcons.sparkles,
         'label': l10n.premiumServices,
         'labelKey': 'premiumServices',
-        'color': AppColors.primary,
       },
       {
-        'icon': Icons.science,
+        'icon': LucideIcons.flaskConical,
         'label': l10n.laboratory,
         'labelKey': 'laboratory',
-        'color': AppColors.primary,
       },
       {
-        'icon': Icons.medical_services,
+        'icon': LucideIcons.scan,
         'label': l10n.radiology,
         'labelKey': 'radiology',
-        'color': AppColors.primary,
       },
       {
-        'icon': Icons.assignment,
+        'icon': LucideIcons.clipboardList,
         'label': l10n.selfTest,
         'labelKey': 'selfTest',
-        'color': AppColors.primary,
       },
       {
-        'icon': Icons.payment,
+        'icon': LucideIcons.creditCard,
         'label': l10n.selfPayment,
         'labelKey': 'selfPayment',
-        'color': AppColors.grey400,
         'disabled': true,
       },
       {
-        'icon': Icons.help,
+        'icon': LucideIcons.clipboardCheck,
         'label': l10n.quiz,
         'labelKey': 'quiz',
-        'color': AppColors.grey400,
         'disabled': true,
       },
       {
-        'icon': Icons.login,
+        'icon': LucideIcons.logIn,
         'label': l10n.selfCheckin,
         'labelKey': 'selfCheckin',
-        'color': AppColors.grey400,
         'disabled': true,
       },
     ];
@@ -125,33 +117,47 @@ class AllServicesPage extends StatelessWidget {
                     height: 80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      gradient: isDisabled
+                      color: isDisabled ? AppColors.grey300 : AppColors.primary,
+                      boxShadow: isDisabled
                           ? null
-                          : LinearGradient(
-                              colors: [
-                                AppColors.primary.withValues(alpha: 0.1),
-                                AppColors.primary.withValues(alpha: 0.2),
-                              ],
+                          : [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(alpha: 0.3),
+                                blurRadius: 20,
+                                offset: const Offset(0, 4),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                    ),
+                    child: Stack(
+                      children: [
+                        // Subtle radial gradient overlay for depth
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              gradient: RadialGradient(
+                                center: Alignment.topLeft,
+                                radius: 1.5,
+                                colors: [
+                                  Colors.white.withValues(alpha: 0.15),
+                                  Colors.transparent,
+                                ],
+                              ),
                             ),
-                      color: isDisabled
-                          ? AppColors.grey200.withValues(alpha: 0.5)
-                          : null,
-                      border: Border.all(
-                        color: AppColors.primary.withValues(alpha: 0.2),
-                        width: 1,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primary.withValues(alpha: 0.1),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
+                          ),
+                        ),
+                        // Icon centered
+                        Center(
+                          child: Icon(
+                            service['icon'] as IconData,
+                            color: isDisabled
+                                ? AppColors.grey600
+                                : AppColors.white,
+                            size: 36,
+                          ),
                         ),
                       ],
-                    ),
-                    child: Icon(
-                      service['icon'] as IconData,
-                      color: service['color'] as Color,
-                      size: 32,
                     ),
                   ),
                   const SizedBox(height: 8),

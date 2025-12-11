@@ -7,6 +7,7 @@ import 'package:patient_portal/widgets/appointment_page_content.dart';
 import 'package:patient_portal/widgets/medical_record_page_content.dart';
 import 'package:patient_portal/widgets/profile_page_content.dart';
 import 'package:patient_portal/core/app_typography.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class MainWrapper extends StatefulWidget {
   final int initialIndex;
@@ -111,10 +112,10 @@ class _PillBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     const Color highlightColor = AppColors.primary;
     final items = [
-      {'icon': Icons.home_outlined, 'label': 'Home'},
-      {'icon': Icons.calendar_month_outlined, 'label': 'Appointment'},
-      {'icon': Icons.medical_information_outlined, 'label': 'Medical Record'},
-      {'icon': Icons.person_outline, 'label': 'Profile'},
+      {'icon': LucideIcons.house, 'label': 'Home'},
+      {'icon': LucideIcons.calendar, 'label': 'Appointment'},
+      {'icon': LucideIcons.fileText, 'label': 'Medical Record'},
+      {'icon': LucideIcons.user, 'label': 'Profile'},
     ];
 
     final safeBottom = MediaQuery.of(context).padding.bottom;
@@ -128,9 +129,16 @@ class _PillBottomNav extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 14,
-              offset: const Offset(0, 6),
+              color: Colors.black.withValues(alpha: 0.12),
+              blurRadius: 24,
+              offset: const Offset(0, -4),
+              spreadRadius: 0,
+            ),
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.08),
+              blurRadius: 16,
+              offset: const Offset(0, -2),
+              spreadRadius: 0,
             ),
           ],
         ),
@@ -158,6 +166,16 @@ class _PillBottomNav extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: selected ? highlightColor : Colors.transparent,
                     borderRadius: BorderRadius.circular(16),
+                    boxShadow: selected
+                        ? [
+                            BoxShadow(
+                              color: highlightColor.withValues(alpha: 0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                              spreadRadius: 0,
+                            ),
+                          ]
+                        : null,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
